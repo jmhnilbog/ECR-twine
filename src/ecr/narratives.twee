@@ -1,0 +1,16 @@
+:: ECR-UI
+This is the UI.
+
+
+[CSS]
+
+#page>article {
+    font-family: "Marcellus";
+    /* flex-wrap: wrap;
+    flex-direction: row;
+    margin: 2em 0; */
+    padding: 1em; 
+    border: .5em solid #f0fd;
+    background-color: #f0f4;
+}
+[continue]

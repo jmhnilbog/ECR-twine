@@ -1,0 +1,39 @@
+:: Start-1
+
+**Interactions with ETERNAL COMPASS ROSE begin joyfully.**
+
+Those who engage with this media, aka the reader, are encouraged to annotate and share it by the organizing principles of ETERNAL COMPASS ROSE (ECR). This media is designed to respond and adapt to annotation as well as to movement along each common rule.
+
+<section>
+{embed image: 'rose.png', alt: 'LITERALIZED rose as decorative item.' }
+
+**ETERNAL COMPASS ROSE** presents information about ~~**E**VERY **C**OUNTABLE **R**EALITY~~ to you by the methods of analogy, parable and commentary in a hypertextual format. With this excellent communication recipe you will meet with **success**!
+</section>
+
+> [[Yes, I Call Upon ETERNAL COMPASS ROSE!->ECR-UI]]
+
+[CSS]
+section {
+    /* display: flex; */
+    font-family: "Marcellus";
+    /* flex-wrap: wrap;
+    flex-direction: row;
+    margin: 2em 0; */
+    padding: 1em; 
+    border: .5em solid #f0fd;
+    background-color: #f0f4;
+}
+
+section .small-caps {
+    font-family: "Marcellus SC";
+}
+
+section>* {
+    
+    flex: 1 1 auto;
+}
+
+section>img {
+    mix-blend-mode: multiply;
+}
+[continue]
