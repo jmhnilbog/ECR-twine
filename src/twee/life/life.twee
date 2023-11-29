@@ -1,0 +1,61 @@
+:: Life
+life.seed: (random.d6 + random.d6 + random.d6 + random.d6 + random.d6 + random.d6) * 6
+--
+
+**Subnarrative CID**: Primary LIFE-Bestian-[T~10^51]->Early Life
+**Seed**: {life.seed}
+**Narrative Index**: 7aXa_84.b.FFF.a  T: 3.9447 x 10^24 
+**__2ND_PERSON__EDUTAINMENT__**
+
+**Abstract (T({life.seed})->, Primary LIFE-Bestian)**:
+
+`__**The first life appears as early as physics allows**__ and rapidly becomes more complex; historical document presented as edutainment.`
+
+* * *
+
+You are a unicellular form of life.
+
+> [[Metabolize]]
+
+:: Metabolize
+energy: 50
+hungry: false
+opponent.distance: random.d10 + random.d10
+molecule.distance: random.d10 + random.d10
+--
+
+An increment of time passes in the murk. Your awareness as a single living cell is not finely attuned.
+
+> [[Metabolize->Metabolize Again]]
+
+:: Metabolize Again
+energy: energy - random.d20
+hungry: energy < 25
+opponent.distance: opponent.distance - 1
+molecule.distance: molecule.distance - 1
+opponent.near: opponent.distance <= 2
+molecule.near: molecule.distance <= 2
+--
+
+Time passes.
+
+[if molecule.near]
+There is a molecule nearby.
+[endif]
+
+[if opponent.near]
+There is another cell nearby.
+[endif]
+
+> [[Metabolize]].
+
+[if molecule.near]
+> [[Move away from the molecule]].
+> [[Move towards the molecule]].
+[endif]
+
+[if opponent.near]
+> [[Move away from the other cell]].
+> [[Move towards the other cell]].
+[endif]
+

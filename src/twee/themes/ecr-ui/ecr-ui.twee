@@ -1,0 +1,10 @@
+:: Themes-ecr-ui
+
+<hr style="display:none;"/>
+
+[CSS]
+#page article {
+    color: {theme.textColor};
+    border: {theme.border};
+}
+[continue]

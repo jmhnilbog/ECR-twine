@@ -1,0 +1,10 @@
+:: Themes-ecr-ui-values
+theme.textColor: 'red'
+theme.border: '2px solid red'
+config.style.page.style: 'thick-line'
+config.body.transition.name: 'fadeInOut'
+config.body.transition.duration: config.body.transition.duration
+config.style.page.verticalAlign: 'top'
+--
+
+<hr style="display:none;"/>

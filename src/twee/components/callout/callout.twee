@@ -1,0 +1,9 @@
+:: Callout [component Callout]
+
+<section class="component Callout">
+
+{embed image: 'images/rose.png', alt: 'LITERALIZED rose as decorative item.' }
+
+{embed passage: content}
+
+</section>

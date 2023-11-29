@@ -1,0 +1,7 @@
+:: Callout-0 [component callout]
+content: 'Callout-0-0'
+--
+{embed passage: 'Callout'}
+
+:: Callout-0-0 [callout content]
+**ETERNAL COMPASS ROSE** presents information about ~~**E**VERY **C**OUNTABLE **R**EALITY~~ to you by the methods of analogy, parable and commentary in a hypertextual format. With this excellent communication recipe you will meet with **success**!

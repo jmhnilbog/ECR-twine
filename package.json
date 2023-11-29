@@ -1,1 +1,19 @@
-{}
+{
+  "name": "ecr",
+  "version": "1.0.0",
+  "description": "Twine project: 'ECR'",
+  "scripts": {
+    "copy-images": "cp -r images build/images",
+    "build": "tweego -l src -o build/ECR.html && npm run copy-images",
+    "build-twee": "tweego -d -l src -o build/ECR.twee",
+    "watch": "npm run copy-images && tweego -l -w src -o build/ECR.html",
+    "tsc": "npx tsc -w"
+  },
+  "author": "John Mark Hawley",
+  "devDependencies": {
+    "typescript": "^5.3.2"
+  },
+  "dependencies": {
+    "fitty": "^2.4.2"
+  }
+}
