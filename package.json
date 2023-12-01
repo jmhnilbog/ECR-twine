@@ -4,10 +4,10 @@
   "description": "Twine project: 'ECR'",
   "scripts": {
     "copy-images": "cp -r images build",
-    "copy-scripts": "cp -r lib/* artifacts/js",
-    "build": "npm run copy-images && npm run copy-scripts && tweego -l src artifacts -o build/ECR.html",
-    "build-twee": "tweego -d -l src -o build/ECR.twee",
-    "watch": "npm run copy-images && npm run copy-scripts && tweego -l -w src artifacts -o build/ECR.html",
+    "copy-scripts": "",
+    "build": "npm run copy-images && tweego -l src artifacts -o build/ECR.html",
+    "build-twee": "npm run copy-images && tweego -d -l src artifacts -o build/ECR.twee",
+    "watch": "npm run copy-images && tweego -l -w src artifacts -o build/ECR.html",
     "tsc": "npx tsc -w"
   },
   "author": "John Mark Hawley",

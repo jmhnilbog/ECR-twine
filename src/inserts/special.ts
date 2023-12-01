@@ -7,6 +7,7 @@ interface Inserts {
 }
 
 var modules: Modules = globalThis.modules || {};
+globalThis.modules = modules;
 modules.inserts = modules.inserts || {};
 modules.inserts.special = {
     match: /^icon of/i,

@@ -9,6 +9,7 @@ interface Components {
 }
 
 var modules: Modules = globalThis.modules || {};
+globalThis.modules = modules;
 modules.components = modules.components || {};
 modules.components.overview = {
     moveToOverview: (selector?: string) => {

@@ -7,6 +7,7 @@ interface Modifiers {
 }
 
 var modules: Modules = globalThis.modules || {};
+globalThis.modules = modules;
 modules.modifiers = modules.modifiers || {};
 modules.modifiers.box = {
     match: /^box/i,

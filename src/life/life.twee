@@ -1,6 +1,18 @@
+:: Life Infocard 
+**Subnarrative CID**: Primary LIFE-Bestian-[T~10^51]->Early Life
+**Seed**: {life.seed}
+**Narrative Index**: 7aXa_84.b.FFF.a  T: 3.9447 x 10^24 
+**__2ND_PERSON__EDUTAINMENT__**
+
+**Abstract (T({life.seed})->, Primary LIFE-Bestian)**:
+
+`__**The first life appears as early as physics allows**__ and rapidly becomes more complex; historical document presented as edutainment.`
+
 :: Life
 life.seed: (random.d6 + random.d6 + random.d6 + random.d6 + random.d6 + random.d6) * 6
 --
+
+{infocard passage: 'Life Infocard'}
 
 **Subnarrative CID**: Primary LIFE-Bestian-[T~10^51]->Early Life
 **Seed**: {life.seed}
@@ -41,21 +53,21 @@ Time passes.
 
 [if molecule.near]
 There is a molecule nearby.
-[endif]
+[continue]
 
 [if opponent.near]
 There is another cell nearby.
-[endif]
+[continue]
 
-> [[Metabolize]].
+> [[Metabolize->Metabolize Again]]
 
 [if molecule.near]
-> [[Move away from the molecule]].
-> [[Move towards the molecule]].
-[endif]
+> [[Move away from the molecule.]]
+> [[Move towards the molecule.]]
+[continue]
 
 [if opponent.near]
-> [[Move away from the other cell]].
-> [[Move towards the other cell]].
-[endif]
+> [[Move away from the other cell.]]
+> [[Move towards the other cell.]]
+[continue]
 

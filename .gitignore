@@ -4,6 +4,4 @@ build/ECR.html
 node_modules
 trash
 .DS_Store
-src/**/*.js
-src/**/*.js.*
 artifacts/js/**/*

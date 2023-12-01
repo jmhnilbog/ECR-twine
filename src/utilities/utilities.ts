@@ -9,6 +9,7 @@ interface Utilities {
 }
 
 var modules: Modules = globalThis.modules || {};
+globalThis.modules = modules;
 modules.utilities = modules.utilities || {};
 modules.utilities.toSafeClassName = (s: string): string => {
     const unsafe = s.toString();

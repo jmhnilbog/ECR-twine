@@ -1,8 +1,16 @@
+declare interface Passage {
+    source: string;
+}
+
 declare var engine: {
     extend: (version: string, f: Function) => void;
     state: {
         set: (name: string, f: any) => void;
         get: (name: string) => any;
+    };
+    render: (mkd: string) => string;
+    story: {
+        passageNamed: (s: string) => Passage;
     };
 };
 
@@ -39,5 +47,5 @@ declare type Fit = {
     element: Element;
 };
 
-declare function fitty(element: Element): Fit;
-declare function fitty(s: string): Fit[];
+// declare var fitty(element: Element) Fit;
+// declare function fitty(s: string): Fit[];
