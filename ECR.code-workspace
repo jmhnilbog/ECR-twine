@@ -1,11 +1,11 @@
 {
 	"folders": [
 		{
-			"path": "."
+			"path": ".."
 		}
 	],
 	"settings": {
-		"twee3LanguageTools.storyformat.current": "chapbook-1",
+		"twee3LanguageTools.storyformat.current": "jmhnilbog-chapbook-1",
 		"twee3LanguageTools.passage.list": false
 	}
 }

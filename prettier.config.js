@@ -20,9 +20,9 @@ const config = {
             },
         },
         {
-            files: 'storyformats/**/format.js',
+            files: '*.ts',
             options: {
-                parser: 'none',
+                parser: 'typescript',
             },
         },
     ],

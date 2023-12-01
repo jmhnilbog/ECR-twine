@@ -1,0 +1,19 @@
+#page section.main {
+    display: flex;
+}
+
+#page section.main > * {
+    flex: 1 1 auto;
+}
+
+#page section.main > article.article {
+    flex: 1 1 auto;
+}
+
+#page section.main > article.overview {
+    flex: 0 1 auto;
+}
+
+#page section.main > aside.sidebar {
+    flex: 0 1 auto;
+}

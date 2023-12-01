@@ -1,0 +1,9 @@
+:: ComponentOverview [component Fit]
+componentOverviewContent: componentOverviewContent || "WARNING: no content"
+--
+
+<section class="component ComponentOverview">
+
+{embed passage: componentOverviewContent}
+
+</section>

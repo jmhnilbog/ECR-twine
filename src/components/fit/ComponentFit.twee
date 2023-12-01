@@ -1,0 +1,12 @@
+:: ComponentFit [component Fit]
+componentFitContent: componentFitContent || "WARNING: no content"
+_fit: modules.utilities.toSafeClassName(modules.utilities.uuidv4())
+__fit: modules.components.fit.fit(_fit)
+--
+
+<section class="component ComponentFit {_fit}">
+
+{embed passage: componentFitContent}
+
+</section>
+

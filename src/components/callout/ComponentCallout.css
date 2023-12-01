@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Marcellus&display=block');
+
+#page article .ComponentCallout {
+    font-family: 'Marcellus';
+    padding: 1em;
+    border: 0.5em solid #f0fd;
+    background-color: #f0f4;
+}
+
+#page article .ComponentCallout > * {
+    flex: 1 1 auto;
+}
+
+#page article .ComponentCallout > img {
+    mix-blend-mode: multiply;
+}

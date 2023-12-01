@@ -1,0 +1,29 @@
+:: StoryData [storydata meta]
+{
+    "ifid": "2AEE88E3-67E2-4FC0-8EE7-E42C789BE532",
+    "format": "jmhnilbog-chapbook",
+    "format-version": "1.2.3",
+    "start": "Init-Start",
+    "zoom": 1,
+    "tag-colors": {
+        "ecr": "blue"
+    }
+}
+
+:: StoryTitle [title storydata meta]
+Eternal Compass Rose
+
+:: Init-Start
+--
+
+[NOTE]
+Perform any start-of-game initialization here, then move to :: Start.
+Custom google fonts are loaded above.
+[continue] 
+
+TEXT
+
+[Javascript]
+console.log('meta.twee');
+[continue]
+
