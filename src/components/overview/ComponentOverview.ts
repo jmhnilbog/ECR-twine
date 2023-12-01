@@ -11,25 +11,29 @@ interface Components {
 var modules: Modules = globalThis.modules || {};
 modules.components = modules.components || {};
 modules.components.overview = {
-    moveToOverview: () => {
-        const articleEl = getArticleElement();
-        const overviewEl = getOverviewElement();
+    moveToOverview: (selector?: string) => {
+        modifyMainSection();
 
-        const toMove = articleEl.querySelector('.ComponentOverview');
+        const toMoveSelector = selector
+            ? `.ComponentOverview.${selector}`
+            : '.ComponentOverview';
+
+        let toMove = document.querySelector(toMoveSelector);
+
         if (toMove) {
-            overviewEl.append(toMove);
+            getOverviewElement().append(toMove);
         } else {
             const observer = new MutationObserver((mutationList, observer) => {
                 for (const _mutation of mutationList) {
-                    const node = articleEl.querySelector('.ComponentOverview');
-                    if (node) {
-                        overviewEl.append(node);
+                    toMove = document.querySelector(toMoveSelector);
+                    if (toMove) {
+                        getOverviewElement().append(toMove);
                         observer.disconnect();
                         return;
                     }
                 }
             });
-            observer.observe(articleEl, {
+            observer.observe(getArticleElement(), {
                 childList: true,
                 attributes: true,
                 subtree: true,
@@ -39,6 +43,7 @@ modules.components.overview = {
 };
 
 const getArticleElement = () => {
+    console.log('GAE');
     const articleEl = document.querySelector('#page article');
     if (!articleEl) {
         throw new Error('Overview: article element not found.');
@@ -48,9 +53,8 @@ const getArticleElement = () => {
 };
 
 const getOverviewElement = () => {
-    let overviewEl = document.querySelector(
-        '#page>section.main>article.overview'
-    );
+    console.log('GOE');
+    let overviewEl = document.querySelector('#page article.overview');
     if (!overviewEl) {
         overviewEl = document.createElement('article');
         overviewEl.classList.add('overview');
@@ -58,30 +62,29 @@ const getOverviewElement = () => {
     return overviewEl;
 };
 
-const getMainSection = () => {
+const modifyMainSection = () => {
+    console.log('GMS');
     const pageEl = document.querySelector('#page');
     if (!pageEl) {
         throw new Error('Overview: #page not found.');
     }
 
-    let mainSection = document.querySelector('#page>section.main');
+    let mainSection = document.querySelector('#page section.main');
+
     if (!mainSection) {
         mainSection = document.createElement('section');
         mainSection.classList.add('main');
-
-        const articleEl = getArticleElement();
-        mainSection.appendChild(articleEl);
-        const overviewEl = getOverviewElement();
-        mainSection.appendChild(overviewEl);
-
-        const headerEl = document.querySelector('#page>header');
-        if (!headerEl) {
-            throw new Error('Overview: #page>header not found.');
-        }
-        headerEl.append(mainSection);
     }
+
+    const articleEl = getArticleElement();
+    mainSection.appendChild(articleEl);
+    const overviewEl = getOverviewElement();
+    mainSection.appendChild(overviewEl);
+
+    const headerEl = document.querySelector('#page header');
+    if (!headerEl) {
+        throw new Error('Overview: #page>header not found.');
+    }
+    headerEl.after(mainSection);
+    return mainSection as Element;
 };
-
-modules.components.overview.moveToOverview();
-
-engine.state.set('modules.components.overview', modules.components.overview);

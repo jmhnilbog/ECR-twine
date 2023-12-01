@@ -1,8 +1,10 @@
 :: ComponentOverview [component Fit]
 componentOverviewContent: componentOverviewContent || "WARNING: no content"
+_componentOverviewId: modules.utilities.uniqueClassName()
+_sidefx: modules.components.overview.moveToOverview(_componentOverviewId)
 --
 
-<section class="component ComponentOverview">
+<section class="component ComponentOverview {_componentOverviewId}">
 
 {embed passage: componentOverviewContent}
 

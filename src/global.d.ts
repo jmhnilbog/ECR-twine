@@ -15,9 +15,19 @@ declare interface Modifier {
     ) => void;
 }
 
+declare interface Insert {
+    match: RegExp;
+    render: (
+        firstArg: string,
+        props: { [key: string]: any },
+        invocation: string
+    ) => string;
+}
+
 declare var config: {
     template: {
         modifiers: Modifier[];
+        inserts: Insert[];
     };
 };
 

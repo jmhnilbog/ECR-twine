@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "Twine project: 'ECR'",
   "scripts": {
-    "copy-images": "cp -r images build/images",
+    "copy-images": "cp -r images build",
     "copy-scripts": "cp -r lib/* artifacts/js",
-    "build": "tweego -l src artifacts -o build/ECR.html && npm run copy-images && npm run copy-scripts",
+    "build": "npm run copy-images && npm run copy-scripts && tweego -l src artifacts -o build/ECR.html",
     "build-twee": "tweego -d -l src -o build/ECR.twee",
     "watch": "npm run copy-images && npm run copy-scripts && tweego -l -w src artifacts -o build/ECR.html",
     "tsc": "npx tsc -w"

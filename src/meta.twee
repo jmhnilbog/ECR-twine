@@ -1,29 +1,23 @@
-:: StoryData [storydata meta]
-{
-    "ifid": "2AEE88E3-67E2-4FC0-8EE7-E42C789BE532",
-    "format": "jmhnilbog-chapbook",
-    "format-version": "1.2.3",
-    "start": "Init-Start",
-    "zoom": 1,
-    "tag-colors": {
-        "ecr": "blue"
-    }
-}
-
-:: StoryTitle [title storydata meta]
+:: StoryTitle
 Eternal Compass Rose
 
-:: Init-Start
---
 
-[NOTE]
-Perform any start-of-game initialization here, then move to :: Start.
-Custom google fonts are loaded above.
-[continue] 
+:: StoryData
+{
+  "ifid": "2AEE88E3-67E2-4FC0-8EE7-E42C789BE532",
+  "format": "Chapbook",
+  "format-version": "1.2.3",
+  "start": "Meta",
+  "tag-colors": {},
+  "zoom": 1
+}
 
-TEXT
 
-[Javascript]
-console.log('meta.twee');
+:: Meta {"position":"25,25","size":"100,100"}
+More
+[align center]
+WE STARTED
 [continue]
+
+> [[Start]]
 

@@ -6,6 +6,6 @@
 #page section.main {
     display: flex;
     flex-direction: row-reverse;
-        align-items: flex-start;
+    align-items: flex-start;
 }
 
