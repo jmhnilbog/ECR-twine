@@ -1,0 +1,5 @@
+#page article .fit {
+    line-height: 100%;
+    white-space: nowrap;
+    display: inline-block;
+}

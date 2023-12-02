@@ -1,4 +1,23 @@
-.modifier-box {
+.modifier.box {
     display: block;
     border: 1em solid red;
+}
+
+.modifier.box.infocard {
+    background: #0fcc0f;
+    border: 1em solid rgb(86, 38, 154);
+}
+.modifier.box.rose {
+    font-family: 'Marcellus';
+    padding: 1em;
+    border: 0.5em solid #f0fd;
+    background-color: #f0f4;
+}
+
+.modifier.box.rose>* {
+    flex: 1 1 auto;
+}
+
+.modifier.box.rose>img {
+    mix-blend-mode: multiply;
 }

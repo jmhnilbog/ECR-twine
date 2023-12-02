@@ -12,6 +12,7 @@ declare var engine: {
     story: {
         passageNamed: (s: string) => Passage;
     };
+    event: any;
 };
 
 declare interface Modifier {
@@ -38,14 +39,3 @@ declare var config: {
         inserts: Insert[];
     };
 };
-
-declare type Fit = {
-    fit: () => void;
-    freeze: () => void;
-    unfreeze: () => void;
-    unsubscribe: () => void;
-    element: Element;
-};
-
-// declare var fitty(element: Element) Fit;
-// declare function fitty(s: string): Fit[];

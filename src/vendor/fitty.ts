@@ -1,12 +1,4 @@
-// declare var fitty(element: Element) Fit;
-// declare function fitty(s: string): Fit[];
-
-interface Fitty {
-    (element: Element): Fit;
-    (s: string): Fit[];
-}
-
-var fitty: Fitty = (() => {
+var fitty: fitty = (() => {
     // node list to array helper method
     //@ts-ignore
     const toArray = (nl) => [].slice.call(nl);

@@ -8,13 +8,12 @@ interface Components {
     };
 }
 
-var modules: Modules = globalThis.modules || {};
+//@ts-ignore
+var modules: Modules = globalThis.modules || modules || {};
 globalThis.modules = modules;
 modules.components = modules.components || {};
 modules.components.overview = {
     moveToOverview: (selector?: string) => {
-        modifyMainSection();
-
         const toMoveSelector = selector
             ? `.ComponentOverview.${selector}`
             : '.ComponentOverview';
@@ -22,13 +21,13 @@ modules.components.overview = {
         let toMove = document.querySelector(toMoveSelector);
 
         if (toMove) {
-            getOverviewElement().append(toMove);
+            modules.utilities.getOverviewElement().append(toMove);
         } else {
             const observer = new MutationObserver((mutationList, observer) => {
                 for (const _mutation of mutationList) {
                     toMove = document.querySelector(toMoveSelector);
                     if (toMove) {
-                        getOverviewElement().append(toMove);
+                        modules.utilities.getOverviewElement().append(toMove);
                         observer.disconnect();
                         return;
                     }

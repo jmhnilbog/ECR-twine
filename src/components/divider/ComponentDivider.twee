@@ -1,5 +1,0 @@
-:: ComponentDivider
-
-<div class="component ComponentDivider">
-    {embed passage: 'ComponentRose'} {embed passage: 'ComponentRose'}  {embed passage: 'ComponentRose'}
-</div>

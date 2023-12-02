@@ -1,4 +1,4 @@
-:: StoryTitle
+:: StoryTitle 
 Eternal Compass Rose
 
 
@@ -12,13 +12,42 @@ Eternal Compass Rose
   "zoom": 1
 }
 
+:: test-INIT
+Hello, world.
 
-:: INIT {"position":"25,25","size":"100,100"}
-More
-[align center]
-WE STARTED
+
+:: INIT
+This page for testing and styling.
+
+{divider insert}
+{full width, text: 'Fullwidth text', id: 'xx', className: 'fancy' }
+
+{infocard passage: 'Test-Insert-Infocard'}
+
+[box]
+boxed text
 [continue]
+
+[box extra-fancy infocard]
+fancy boxed text
+{embed passage: 'Test-Insert-Infocard'}
+[continue]
+
+[box extra-fancy rose]
+fancy boxed text
+{embed passage: 'Test-Insert-Infocard'}
+[continue]
+
+[move]
+some fancy stuff here
+[continue]
+
 
 > [[Start]]
 > [[Life]]
 
+:: Test-Insert-Infocard
+This is a sample.
+
+**label**: data
+**label**: more data

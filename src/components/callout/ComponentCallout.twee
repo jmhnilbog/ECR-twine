@@ -1,9 +1,0 @@
-:: ComponentCallout [component Callout]
-componentCalloutContent: componentCalloutContent || "WARNING: no content"
-_callout: modules.utilities.toSafeClassName(modules.utilities.uuidv4())
---
-
-<section class="component ComponentCallout {_callout}">
-{embed passage: 'ComponentRose'}
-{embed passage: componentCalloutContent}
-</section>
