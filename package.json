@@ -3,16 +3,16 @@
   "version": "1.0.0",
   "description": "Twine project: 'ECR'",
   "scripts": {
-    "copy-images": "cp -r images build",
-    "clean": "rm -rf artifacts/js && rm -rf build/*",
-    "build": "npm run copy-images && tweego -l src artifacts -o build/ECR.html",
-    "build-twee": "npm run copy-images && tweego -d -l src artifacts -o build/ECR.twee",
-    "watch": "npm run copy-images && tweego -l -w src artifacts -o build/ECR.html",
-    "tsc": "npx tsc -w",
-    "build-fresh": "npm run clean && npx tsc && npm run build && npm run build-twee"
+    "watch": "concurrently \"npm run watch-tweego\" \"npm run watch-tsc\"",
+    "watch-tweego": "tweego -l -w src artifacts -o build/index.html",
+    "watch-tsc": "npx tsc -w",
+    "clean-artifacts": "rm -rf artifacts/js",
+    "clean-build": "rm build/index.*",
+    "clean": "npm run clean-artifacts && npm run clean-build"
   },
   "author": "John Mark Hawley",
   "devDependencies": {
+    "concurrently": "^8.2.2",
     "typescript": "^5.3.2"
   },
   "dependencies": {

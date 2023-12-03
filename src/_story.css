@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Neuton:ital,wght@0,200;0,300;0,400;0,700;0,800;1,400&family=Oleo+Script:wght@400;700&family=Rouge+Script&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+#page section.main {
+    font-family: 'Archivo Narrow';
+}
+
+/* style forks */
+
+/*
+<div class="fork">
+<p>
+<a href="javascript:void(0)" data-cb-go="Start">Start</a>
+<a href="javascript:void(0)" data-cb-go="Life">Life</a>
+<a href="javascript:void(0)" data-cb-go="Glossary">Glossary</a>
+</p>
+</div>
+*/
+
+#page .fork
+{
+    margin-bottom: 1em;
+    background-color:rgba(170, 53, 53, 0.131);
+}
+#page .fork p {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+#page .fork p a {
+    display: block;
+    flex-grow: 1;
+    padding: 0.5em;
+    text-align: right;
+    font-weight: bold;
+}
+
+#page .fork p a:hover,
+#page .fork p a:active {
+    background-color: hsla(0, 100%, 98.03921568627452%, 1);
+    color: hsla(0, 73.83966244725738%, 53.529411764705884%, 1);
+}

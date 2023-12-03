@@ -1,0 +1,74 @@
+:: test-page [test]{"position":"825,475","size":"100,100"}
+
+# Testing
+
+This is a test page for all of the fancier bits.
+
+***
+
+## Inserts
+
+### The full-width insert.
+
+{full width, text: 'Basic'}
+{full width, text: 'With .fancy.xx', id: 'xx', className: 'fancy' }
+
+### The divider insert.
+
+{divider insert}
+
+### The infocard insert.
+
+{infocard passage: 'Test-Insert-Infocard'}
+
+***
+
+## Modifiers
+
+### The box modifier.
+
+[box]
+A little text.
+**With** ~~Markdown~~.
+[continue]
+
+[box extra-fancy infocard]
+Extra-fancy boxed text styled with .extra-fancy.infocard. The remainder of the box is an embedded passage.
+{embed passage: 'Test-Insert-Infocard'}
+[continue]
+
+[box extra-fancy rose]
+Extra-fancy boxed text styled with .extra-fancy.rose. The remainder of the box is an embedded passage.
+{embed passage: 'Test-Insert-Infocard'}
+[continue]
+
+### The definition modifier.
+
+[definition WORD]
+definition here!
+[continue]
+
+### The move modifier.
+
+[move]
+some fancy stuff here
+[continue]
+
+Visit [[this passage->Test-Clear-Overview]] to clear the overview.
+
+{back link}
+
+:: Test-Insert-Infocard [test]
+This is a sample.
+
+**label**: data
+**label**: more data
+
+:: Test-Clear-Overview [test]
+
+The overview section should be gone now.
+[move clear]
+
+[continue]
+
+{back link}

@@ -34,7 +34,6 @@
     },
     "include": ["./src/**/*.ts"],
     "exclude": [
-      "node_modules/**/*",
-      "storyformats"
+      "node_modules/**/*"
     ]
   }

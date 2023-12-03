@@ -12,10 +12,9 @@ interface Utilities {
     moveToOverview: any;
 }
 
-var modules: Modules = globalThis.modules || modules || {};
-globalThis.modules = modules;
-modules.utilities = modules.utilities || {};
-modules.utilities.toSafeClassName = (s: string): string => {
+globalThis.modules || globalThis.modules || {};
+globalThis.modules.utilities = globalThis.modules.utilities || {};
+globalThis.modules.utilities.toSafeClassName = (s: string): string => {
     const unsafe = s.toString();
     const safe = encodeURIComponent(unsafe)
         .toLowerCase()
@@ -23,7 +22,7 @@ modules.utilities.toSafeClassName = (s: string): string => {
     return 'X' + safe;
 };
 
-modules.utilities.uuidv4 = (() => {
+globalThis.modules.utilities.uuidv4 = (() => {
     const UUID_V4_FORMAT = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
     const uuidv4 = (format = UUID_V4_FORMAT) =>
         format.replace(/[xy]/g, function (c) {
@@ -34,10 +33,10 @@ modules.utilities.uuidv4 = (() => {
     return uuidv4;
 })();
 
-modules.utilities.uniqueClassName = () =>
+globalThis.modules.utilities.uniqueClassName = () =>
     modules.utilities.toSafeClassName(modules.utilities.uuidv4());
 
-modules.utilities.onMutation = (
+globalThis.modules.utilities.onMutation = (
     selector: string,
     cb: (node: Element) => void
 ) => {
@@ -69,7 +68,7 @@ modules.utilities.onMutation = (
         });
     }
 };
-modules.utilities.getOverviewElement = () => {
+globalThis.modules.utilities.getOverviewElement = () => {
     let overviewEl = document.querySelector('#page article.overview');
     if (!overviewEl) {
         overviewEl = document.createElement('article');
@@ -78,41 +77,27 @@ modules.utilities.getOverviewElement = () => {
     return overviewEl;
 };
 
-modules.utilities.setupDOM = (() => {
-    const getArticleElement = () => {
-        const articleEl = document.querySelector('#page article');
-        if (!articleEl) {
-            throw new Error('Overview: article element not found.');
-        }
-        articleEl.classList.add('article');
-        return articleEl;
-    };
+globalThis.modules.utilities.setupDOM = () => {
+    const mainSection =
+        document.querySelector('#page section.main') ||
+        document.createElement('section');
+    mainSection.classList.add('main');
 
-    const getMainSection = () => {
-        const pageEl = document.querySelector('#page');
-        if (!pageEl) {
-            throw new Error('Overview: #page not found.');
-        }
+    const overviewArticle =
+        document.querySelector('#page article.overview') ||
+        document.createElement('article');
+    overviewArticle.classList.add('overview');
 
-        let mainSection = document.querySelector('#page section.main');
+    const articleArticle =
+        document.querySelector('#page>article') ||
+        document.createElement('article');
+    articleArticle.classList.add('article');
 
-        if (!mainSection) {
-            mainSection = document.createElement('section');
-            mainSection.classList.add('main');
-        }
-
-        const articleEl = getArticleElement();
-        mainSection.appendChild(articleEl);
-        const overviewEl = modules.utilities.getOverviewElement();
-        mainSection.appendChild(overviewEl);
-
-        const headerEl = document.querySelector('#page header');
-        if (!headerEl) {
-            throw new Error('Overview: #page>header not found.');
-        }
-        headerEl.after(mainSection);
-        return mainSection as Element;
-    };
-
-    return () => getMainSection();
-})();
+    const headerEl = document.querySelector('#page header');
+    if (!headerEl) {
+        throw new Error('Overview: #page>header not found.');
+    }
+    headerEl.after(mainSection);
+    mainSection.append(articleArticle);
+    mainSection.append(overviewArticle);
+};

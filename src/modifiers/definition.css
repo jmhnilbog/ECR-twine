@@ -1,0 +1,12 @@
+.modifier.definition{
+    display: block;
+    background-color:rgba(0, 0, 0, 0.288);
+}
+
+.modifier.definition>.dt {
+    font-weight: bold;
+}
+
+.modifier.definition>.dd {
+    margin-left: 2em;
+}

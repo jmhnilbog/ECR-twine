@@ -38,4 +38,20 @@ declare var config: {
         modifiers: Modifier[];
         inserts: Insert[];
     };
+    testing: boolean;
+    header: {
+        left: string;
+        center: string;
+        right: string;
+    };
+    footer: {
+        left: string;
+        center: string;
+        right: string;
+    };
+    style: {
+        googleFont: string;
+    };
 };
+
+declare var modules: Modules;

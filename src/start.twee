@@ -1,0 +1,59 @@
+:: StoryTitle
+test-twine
+
+
+:: StoryData
+{
+  "ifid": "992209DC-A153-48BF-9F4F-B281A1FCFAC8",
+  "format": "Chapbook",
+  "format-version": "1.2.3",
+  "start": "Start",
+  "zoom": 1
+}
+
+:: Start {"position":"700,350","size":"100,100"}
+
+{full width, text: 'Congratulations', className: 'script'}
+
+{divider insert}
+
+are due to [[you...->Start-1]]
+
+:: Start-1
+
+{full width, text: 'YOU'}
+
+have discovered this media fully describing
+
+[box rose]
+**Eternal**
+**Compass**
+**Rose**
+[continue]
+
+perfectly redacted, paginated, and conceptually codified for your approximate
+
+# **ETERNAL COMPASS ROSE**
+
+coordinates in a semi-narrative hypertextual format indubitably known scientifically to be correct and good in all aspects, dimensions, simulations and other narrative structures.
+
+**Interactions with ETERNAL COMPASS ROSE begin joyfully.**
+
+Those who engage with this media, aka the reader, are encouraged to annotate and share it by the organizing principles of ETERNAL COMPASS ROSE (ECR). This media is designed to respond and adapt to annotation as well as to movement along ~~e~~ach ~~c~~ommon ~~r~~ule.
+
+[box]
+**ETERNAL COMPASS ROSE** presents information about ~~**E**VERY **C**OUNTABLE **R**EALITY~~ to you by the methods of analogy, parable and commentary in a hypertextual format. With this excellent communication recipe you will meet with **success**!
+[continue]
+
+[box warning]
+## WARNING
+
+Partial Understanding is not guaranteed. Full understanding is heretical to the glorious ETERNAL COMPASS ROSE. **Heresy** is punishable by __REDACTION__.
+[continue]
+
+> [[WITNESS THE ETERNAL COMPASS ROSE]]
+> [[DENY THE ETERNAL COMPASS ROSE]]
+
+
+
+

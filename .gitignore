@@ -1,7 +1,4 @@
-build/**/*
-build/ECR.html
 .vscode
 node_modules
-trash
 .DS_Store
-artifacts/js/**/*
+artifacts/*

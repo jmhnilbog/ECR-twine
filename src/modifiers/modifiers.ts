@@ -5,18 +5,27 @@ interface Modules {
 interface Modifiers {
     box: Modifier;
     move: Modifier;
+    definition: Modifier;
 }
 
-var modules: Modules = globalThis.modules || modules || {};
-globalThis.modules = modules;
-modules.modifiers = modules.modifiers || {};
-modules.modifiers.box = {
+globalThis.modules = globalThis.modules || {};
+globalThis.modules.modifiers = globalThis.modules.modifiers || {};
+globalThis.modules.modifiers.definition = {
+    match: /^definition/i,
+    process: (output, { invocation }) => {
+        const chunks = invocation.split(/\s+/);
+        chunks.shift();
+        const term = chunks.join(' ');
+
+        output.text = `<div class="modifier definition"><div class="dt">${term}</div><div class="dd">${output.text}</div></div>`;
+
+        output.startsNewParagraph = true;
+    },
+};
+globalThis.modules.modifiers.box = {
     match: /^box/i,
-    process: (output, state, _invocation) => {
-        console.log('output', output);
-        console.log('state', state);
-        console.log('invocation', _invocation);
-        const invocationChunks = state.invocation.split(/\s+/);
+    process: (output, { invocation }) => {
+        const invocationChunks = invocation.split(/\s+/);
         const modifierName = invocationChunks.shift();
         console.log(modifierName);
         const bits: { [keys: string]: string } = {};
@@ -32,10 +41,10 @@ modules.modifiers.box = {
         });
 
         output.text = `<div class="modifier box ${Object.keys(bits).join(
-            ', '
+            ' '
         )}">${
             bits.rose
-                ? "<img src='images/rose.png' alt='LITERALIZED rose as decorative item.'>"
+                ? "<img src='media/rose.png' alt='LITERALIZED rose as decorative item.'>"
                 : ''
         }${output.text}</div>`;
 
@@ -45,13 +54,10 @@ modules.modifiers.box = {
     },
 };
 
-modules.modifiers.move = {
+globalThis.modules.modifiers.move = {
     match: /^move/i,
-    process: (output, state, _invocation) => {
-        console.log('output', output);
-        console.log('state', state);
-        console.log('invocation', _invocation);
-        const invocationChunks = state.invocation.split(/\s+/);
+    process: (output, { invocation }) => {
+        const invocationChunks = invocation.split(/\s+/);
         const modifierName = invocationChunks.shift();
         console.log(modifierName);
         const bits: { [keys: string]: string } = {};
@@ -65,6 +71,11 @@ modules.modifiers.move = {
                 bits[split[0]] = split[1];
             }
         });
+
+        if (bits.clear) {
+            const overview = modules.utilities.getOverviewElement();
+            overview.innerHTML = '';
+        }
 
         const el = document.createElement('div');
         el.textContent = output.text;

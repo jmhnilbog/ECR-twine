@@ -1,0 +1,30 @@
+:: DENY THE ETERNAL COMPASS ROSE
+perspective: 'reader'
+location: 'at the computer'
+--
+
+You deny the majestic ETERNAL COMPASS ROSE.
+
+There's not much going on, though. 
+
+> [[Look around.->{location} look around]]
+> [[Look inward.->Look at self]]
+> [[Access the ETERNAL COMPASS ROSE.->Start]]
+
+:: Look at self
+
+Huh.
+
+:: at the computer look around
+present: ['computer']
+--
+The reader is sitting at a computer, on which they have recently encountered ETERNAL COMPASS ROSE.
+
+{embed passage: '_Callouts'}
+
+:: _Callouts [partial]
+
+{mention things: present }
+
+
+
