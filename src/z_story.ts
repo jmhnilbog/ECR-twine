@@ -14,7 +14,7 @@ engine.extend('1.0.0', () => {
     console.log('Inserts & Modifiers added.', config.template);
 
     // Testing mode?
-    config.testing = true;
+    config.testing = false;
 
     if (config.testing) {
         // link to the test page.
@@ -33,8 +33,9 @@ engine.extend('1.0.0', () => {
             }
         );
     }
+    //@ts-ignore
+    config.body.transition.name = 'none';
 
-    // help?kk
     modules.utilities.setupDOM();
 
     engine.event.on('article-new', () => {
@@ -54,8 +55,6 @@ engine.extend('1.0.0', () => {
         }
 
         const observer = new MutationObserver((mutationList, _observer) => {
-            console.log(mutationList.length, 'mutations.');
-            console.log(mutationList);
             let childrenAdded = 0;
             //let attributesChanged = 0;
             let childrenRemoved = 0;

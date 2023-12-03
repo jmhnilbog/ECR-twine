@@ -1,0 +1,17 @@
+.fade-in-500 {
+    animation: fade-in 1s ease-out forwards;
+    animation-delay: 500ms;
+    opacity: 0;
+}
+
+.fade-in-1500 {
+    animation: fade-in 1s ease-out forwards;
+    animation-delay: 1500ms;
+    opacity: 0;
+}
+
+.fade-in-2000 {
+    animation: fade-in 1s ease-out forwards;
+    animation-delay: 2000ms;
+    opacity: 0;
+}

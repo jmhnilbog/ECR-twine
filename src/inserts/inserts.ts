@@ -59,9 +59,7 @@ globalThis.modules.inserts.fullwidth = {
 
         const result = `<section class="insert fit ${id} ${className}">${text}</section>`;
 
-        console.log('LISTENING FOR ARTICLE-new');
         engine.event.once('article-new', () => {
-            console.log('ARTICLE-new');
             fitty(`.fit.${id}`);
         });
 
@@ -72,8 +70,8 @@ globalThis.modules.inserts.fullwidth = {
 globalThis.modules.inserts.divider = {
     match: /^divider(\s+insert)?/i,
     render: (_, props, _invocation) => {
-        const { alt = '', src = 'media/rose.png' } = props;
-        const result = `<div class="insert divider"><img src="${src}" alt="${alt}" /><img src="${src}" alt="${alt}" /><img src="${src}" alt="${alt}" /></div>`;
+        const { alt = '', src = 'media/rose.png', className } = props;
+        const result = `<div class="insert divider ${className}"><img src="${src}" alt="${alt}" /><img src="${src}" alt="${alt}" /><img src="${src}" alt="${alt}" /></div>`;
 
         return result;
     },

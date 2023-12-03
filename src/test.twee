@@ -6,6 +6,37 @@ This is a test page for all of the fancier bits.
 
 ***
 
+## CSS & Fonts
+
+### .plain
+
+The default font is 'Neuton'. It is applied with the .plain class.
+
+### .elaborate
+
+<div class="elaborate">
+The .elaborate class uses Oleo Script.
+</div>
+
+### .delicate
+
+<div class="delicate">
+The .delicate class uses Rouge Script.
+</div>
+
+### .technical
+
+<div class="technical">
+Technical script labels are in Archivo Narrow, applied with .technical.
+</div>
+
+### .mono 
+
+<div class="mono">
+Other monospaced text is in Space Mono, applied with .mono.
+</div>
+
+
 ## Inserts
 
 ### The full-width insert.
