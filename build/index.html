@@ -266,7 +266,9 @@ globalThis.modules.inserts.fullwidth = {
         const { uniqueClassName } = modules.utilities;
         const { text, id = uniqueClassName(), className = '' } = props;
         const result = `<section class="insert fit ${id} ${className}">${text}</section>`;
-        engine.event.once('new-article', () => {
+        console.log('LISTENING FOR ARTICLE-new');
+        engine.event.once('article-new', () => {
+            console.log('ARTICLE-new');
             fitty(`.fit.${id}`);
         });
         return result;
@@ -726,6 +728,7 @@ engine.extend('1.0.0', () => {
             }
         });
     }
+    // help?kk
     modules.utilities.setupDOM();
     engine.event.on('article-new', () => {
         const overview = document.querySelector('#page section.main article.overview');
@@ -775,43 +778,7 @@ engine.extend('1.0.0', () => {
     })();
     console.log('Engine updated.');
 });
-//# sourceMappingURL=z_story.js.map
-/* twine-user-script #8: "zzz_init.js" */
-"use strict";
-/**
- * This is the code that runs last, before any passages are shown.
- * It must be named LAST alphabetically, hence the weird file name.
- */
-engine.extend('1.0.0', () => {
-    //@ts-ignore
-    engine.event.on('*', (e, t) => {
-        console.log('LOGGING EVENT', e, t);
-    });
-    //@ts-ignore
-    engine.event.on('dom-click', (e, t) => {
-        modules.utilities.getOverviewElement().textContent = '';
-    });
-    console.log('Hoisting modules into state.');
-    console.log(modules);
-    console.log(engine.state);
-    console.log(config);
-    engine.state.set('utilities', modules.utilities);
-    engine.state.set('components', modules.components);
-    modules.utilities.setupDOM();
-    console.log('Adding Modifiers:', Object.keys(modules.modifiers));
-    config.template.modifiers = [
-        ...Object.values(modules.modifiers),
-        ...config.template.modifiers,
-    ];
-    console.log('Added Modifiers:');
-    console.log('Adding Inserts:', Object.keys(modules.inserts));
-    config.template.inserts = [
-        ...Object.values(modules.inserts),
-        ...config.template.inserts,
-    ];
-    console.log('Engine updated.');
-});
-//# sourceMappingURL=zzz_init.js.map</script><tw-passagedata pid="1" name="DENY THE ETERNAL COMPASS ROSE" tags="" position="100,100" size="100,100">perspective: &#39;reader&#39;
+//# sourceMappingURL=z_story.js.map</script><tw-passagedata pid="1" name="DENY THE ETERNAL COMPASS ROSE" tags="" position="100,100" size="100,100">perspective: &#39;reader&#39;
 location: &#39;at the computer&#39;
 --
 

@@ -1,0 +1,1192 @@
+:: _story.css [stylesheet]
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Neuton:ital,wght@0,200;0,300;0,400;0,700;0,800;1,400&family=Oleo+Script:wght@400;700&family=Rouge+Script&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+#page section.main {
+    font-family: 'Archivo Narrow';
+}
+
+/* style forks */
+
+/*
+<div class="fork">
+<p>
+<a href="javascript:void(0)" data-cb-go="Start">Start</a>
+<a href="javascript:void(0)" data-cb-go="Life">Life</a>
+<a href="javascript:void(0)" data-cb-go="Glossary">Glossary</a>
+</p>
+</div>
+*/
+
+#page .fork
+{
+    margin-bottom: 1em;
+    background-color:rgba(170, 53, 53, 0.131);
+}
+#page .fork p {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+#page .fork p a {
+    display: block;
+    flex-grow: 1;
+    padding: 0.5em;
+    text-align: right;
+    font-weight: bold;
+}
+
+#page .fork p a:hover,
+#page .fork p a:active {
+    background-color: hsla(0, 100%, 98.03921568627452%, 1);
+    color: hsla(0, 73.83966244725738%, 53.529411764705884%, 1);
+}
+
+
+
+:: DENY THE ETERNAL COMPASS ROSE
+perspective: 'reader'
+location: 'at the computer'
+--
+
+You deny the majestic ETERNAL COMPASS ROSE.
+
+There's not much going on, though. 
+
+> [[Look around.->{location} look around]]
+> [[Look inward.->Look at self]]
+> [[Access the ETERNAL COMPASS ROSE.->Start]]
+
+
+:: Look at self
+Huh.
+
+
+:: at the computer look around
+present: ['computer']
+--
+The reader is sitting at a computer, on which they have recently encountered ETERNAL COMPASS ROSE.
+
+{embed passage: '_Callouts'}
+
+
+:: _Callouts [partial]
+{mention things: present }
+
+
+:: ECR-UI [ecr ui]
+config.header.right: '[[Glossary]]'
+--
+
+{ embed passage: 'Themes-ecr-ui-values'}
+
+{ embed passage: 'Fit-1'}
+
+As an **INITIATE** of the mysterious _Eternal Compass Rose_, you have partial access to a single primary CID narrative and several sub-narratives within it. Incredible!
+
+---
+
+**CID**: PArTy-p00p3R5\
+**Narrative Indices**: 7aXa_84.b.\*.a   
+**Seeds**: RNG(3d6x6)\
+**Resolution Coefficients**: T=(3.2 x 10^-10 s), L=(1.6 \* 10^-35 m), U=(1.2 \* 10^18 u)\
+**Primary Sub-narrative CIDs**: Earf-[\*], CORVETTE-End-times-Bestian-[T<10^51, T>10^200], Bezos-[933], Total-LY-8OS  
+
+> [[WHAT IS: a CID?->glossary-cid]]
+> [[ACCESS SUBNARRATIVE: Earf-[\*]->Earf]]
+> [[ACCESS SUBNARRATIVE: CORVETTE-End-times-Bestian-[T<10^51, T>10^200]->Corvette Endtimes]]
+> [[ACCESS SUBNARRATIVE: LIFE-Bestian-[T~10^51]->Early Life]]
+
+---
+
+Learn, be changed!
+
+{ embed passage: 'Themes-ecr-ui' }
+
+
+:: Fit-1
+content: 'Fit-1-1'
+--
+{embed passage: 'Fit'}
+
+
+:: Fit-1-1
+# Eternal Compass Rose
+
+[CSS]
+#page .Fit {
+    background: black;
+}
+
+
+:: Glossary
+# Glossary
+
+<details>
+<summary>CID</summary>
+{embed passage: 'glossary-cid'}
+</details>
+
+<details>
+<summary>Narrative</summary>
+{embed passage: 'glossary-narrative'}
+</details>
+
+
+:: glossary-cid
+# CID
+
+A **CID** is a unique reference to a set of [[narratives->glossary-narrative]] identified and codified within the [[Eternal Compass Rose->glossary-eternal-compass-rose]]. It describes the types of narratives within the set and supplies friendly nicknames for those most referenced, which the reader is sure to find delightful.
+
+CIDs are assigned to narrative sets as they are discovered and codified by the _ECR_. **HERETICAL**
+
+Let us examime the structure of the CID in which [[the reader->glossary-the-reader]] exists. Take note! The CID has been truncated and abridged to best exist within the current narrative. The true glories of the CID (and the *E* *C* *R*)
+
+**CID**: PArTy-p00p3R5\
+**Narrative Indices**: 7aXa_84.b.\*.a   
+**Seeds**: RNG(3d6x6)\
+**Resolution Coefficients**:\
+  T=(3.2 x 10^-10 s)\
+  L=(1.6 \* 10^-35 m)\
+  U=(1.2 \* 10^18 u)\
+**Primary Sub-narrative CIDs**: Earf-[\*], CORVETTE-End-times-Bestian-[T<10^51, T>10^200], Bezos-[933], Total-LY-8OS
+
+
+
+{back link}
+
+
+:: glossary-ecr [glossary]
+# ETERNAL COMPASS ROSE
+
+Every system contains theorems that may not be proven within that system.
+
+Every dimension is expressible as a real number 0 to 1 inclusive, as it exists as a measurable quantity.
+
+The ULTIMATE CATALOG is a system that enumerates all countably infinite possible narratives.
+
+Those narratives that may not be indexed by the ULTIMATE CATALOG compose NULLSPACE. Observation of NULLSPACE from a countably infinite dimensional remove reveals
+
+ETERNAL COMPASS ROSE
+
+
+:: glossary-religion
+bible as post apocalyptic literature, each book by different author/conflicting story as different author, use apocrypha as well. Genesis in reverse? Void actually spectrum, unnamed, naming causes disruption. Separation of waters destroys peace, manifestation of consciousness.
+
+
+:: glossary-eternal-compass-rose
+Narrative may be described using a small number of dimensions. These make up the eternal compass rose: spatial x-y-z, a simulation identifier, probability notation, metaphysical level, and time.
+
+Simulation identifiers are similar to Dewey decimal notation. The primary forms of simulation are imagination and memory. Computational simulation and play are forms of imagination. Memory simulations are the lowest in fidelity.
+
+Metaphysical level indicates the positive or negative perfection of the universe. Heavens and hells are at high levels of positive and negative metaphysics.
+
+Probabilities of zero or less are controlled by Chaos. Probabilities between zero and one indicate the presence of parallel universes and alternate outcomes. Fully resolved simulations have probability 1. Probabilities greater than one are result values of completed simulations.
+
+
+:: glossary-utlimate-catalog
+Every system contains theorems that may not be proven within that system.
+
+Every dimension is expressible as a real number 0 to 1 inclusive, as it exists as a measurable quantity.
+
+The ULTIMATE CATALOG is a system that enumerates all countably infinite possible narratives.
+
+Those narratives that may not be indexed by the ULTIMATE CATALOG compose NULLSPACE. Observation of NULLSPACE from a countably infinite dimensional remove reveals
+
+ETERNAL COMPASS ROSE
+
+
+:: glossary-story
+Story is the conversion of simulated NULLSPACE into narrative.
+NULLSPACE asymptotically approaches zero in countably infinite dimensions.
+The asymptote may only be
+ETERNAL COMPASS ROSE
+
+
+:: glossary-simulation
+Eternal Compass Rose is the index of relationships among sets of simulacra. The system of classification used is provably perfect. 
+
+Tasks expand to fill their containers. 
+
+Everything has been organized
+
+
+:: glossary-the-reader [glossary]
+# The Reader
+
+The reader is the narrative processor of a specific narrative. Here are some examples of readers that may be familiar to you.
+
+- [[YOU]]
+- A household pet, sleeping
+- A computer
+
+Narratives do not require readers.
+
+COUNTERFACTUAL: There is no writer.
+
+{back link}
+
+
+:: glossary-narrative
+
+
+:: divider.css [stylesheet]
+.insert.divider {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 1.5em;
+    margin-top: 1.5em;
+}
+
+.insert.divider>img {
+    width: 3em;
+    text-align: center;
+    margin: 0;
+}
+
+
+:: fullwidth.css [stylesheet]
+#page article .fit {
+    line-height: 100%;
+    white-space: nowrap;
+    display: inline-block;
+}
+
+
+:: infocard.css [stylesheet]
+#page .infocard {
+    background:#0fcc0f;
+}
+
+
+:: Life Infocard
+**Subnarrative CID**: Primary LIFE-Bestian-[T~10^51]->Early Life
+**Seed**: {life.seed}
+**Narrative Index**: 7aXa_84.b.FFF.a  T: 3.9447 x 10^24 
+**__2ND_PERSON__EDUTAINMENT__**
+
+**Abstract (T({life.seed})->, Primary LIFE-Bestian)**:
+
+`__**The first life appears as early as physics allows**__ and rapidly becomes more complex; historical document presented as edutainment.`
+
+
+:: Life
+life.seed: (random.d6 + random.d6 + random.d6 + random.d6 + random.d6 + random.d6) * 6
+--
+
+{infocard passage: 'Life Infocard'}
+
+**Subnarrative CID**: Primary LIFE-Bestian-[T~10^51]->Early Life
+**Seed**: {life.seed}
+**Narrative Index**: 7aXa_84.b.FFF.a  T: 3.9447 x 10^24 
+**__2ND_PERSON__EDUTAINMENT__**
+
+**Abstract (T({life.seed})->, Primary LIFE-Bestian)**:
+
+`__**The first life appears as early as physics allows**__ and rapidly becomes more complex; historical document presented as edutainment.`
+
+* * *
+
+You are a unicellular form of life.
+
+> [[Metabolize]]
+
+
+:: Metabolize
+energy: 50
+hungry: false
+opponent.distance: random.d10 + random.d10
+molecule.distance: random.d10 + random.d10
+--
+
+An increment of time passes in the murk. Your awareness as a single living cell is not finely attuned.
+
+> [[Metabolize->Metabolize Again]]
+
+
+:: Metabolize Again
+energy: energy - random.d20
+hungry: energy < 25
+opponent.distance: opponent.distance - 1
+molecule.distance: molecule.distance - 1
+opponent.near: opponent.distance <= 2
+molecule.near: molecule.distance <= 2
+--
+
+Time passes.
+
+[if molecule.near]
+There is a molecule nearby.
+[continue]
+
+[if opponent.near]
+There is another cell nearby.
+[continue]
+
+> [[Metabolize->Metabolize Again]]
+
+[if molecule.near]
+> [[Move away from the molecule.]]
+> [[Move towards the molecule.]]
+[continue]
+
+[if opponent.near]
+> [[Move away from the other cell.]]
+> [[Move towards the other cell.]]
+[continue]
+
+
+:: box.css [stylesheet]
+.modifier.box {
+    display: block;
+    border: 1em solid red;
+}
+
+.modifier.box.infocard {
+    background: #0fcc0f;
+    border: 1em solid rgb(86, 38, 154);
+}
+.modifier.box.rose {
+    font-family: 'Marcellus';
+    padding: 1em;
+    border: 0.5em solid #f0fd;
+    background-color: #f0f4;
+}
+
+.modifier.box.rose>* {
+    flex: 1 1 auto;
+}
+
+.modifier.box.rose>img {
+    mix-blend-mode: multiply;
+}
+
+
+:: definition.css [stylesheet]
+.modifier.definition{
+    display: block;
+    background-color:rgba(0, 0, 0, 0.288);
+}
+
+.modifier.definition>.dt {
+    font-weight: bold;
+}
+
+.modifier.definition>.dd {
+    margin-left: 2em;
+}
+
+
+
+:: move.css [stylesheet]
+#page article.overview {
+    flex: 0 1 auto;
+    margin-right: 1em;
+}
+
+#page section.main {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-start;
+}
+
+
+:: StoryTitle
+test-twine
+
+
+:: StoryData
+{
+	"ifid": "992209DC-A153-48BF-9F4F-B281A1FCFAC8",
+	"format": "Chapbook",
+	"format-version": "1.2.3",
+	"start": "Start",
+	"zoom": 1
+}
+
+
+:: Start {"position":"700,350","size":"100,100"}
+{full width, text: 'Congratulations', className: 'script'}
+
+{divider insert}
+
+are due to [[you...->Start-1]]
+
+
+:: Start-1
+{full width, text: 'YOU'}
+
+have discovered this media fully describing
+
+[box rose]
+**Eternal**
+**Compass**
+**Rose**
+[continue]
+
+perfectly redacted, paginated, and conceptually codified for your approximate
+
+# **ETERNAL COMPASS ROSE**
+
+coordinates in a semi-narrative hypertextual format indubitably known scientifically to be correct and good in all aspects, dimensions, simulations and other narrative structures.
+
+**Interactions with ETERNAL COMPASS ROSE begin joyfully.**
+
+Those who engage with this media, aka the reader, are encouraged to annotate and share it by the organizing principles of ETERNAL COMPASS ROSE (ECR). This media is designed to respond and adapt to annotation as well as to movement along ~~e~~ach ~~c~~ommon ~~r~~ule.
+
+[box]
+**ETERNAL COMPASS ROSE** presents information about ~~**E**VERY **C**OUNTABLE **R**EALITY~~ to you by the methods of analogy, parable and commentary in a hypertextual format. With this excellent communication recipe you will meet with **success**!
+[continue]
+
+[box warning]
+## WARNING
+
+Partial Understanding is not guaranteed. Full understanding is heretical to the glorious ETERNAL COMPASS ROSE. **Heresy** is punishable by __REDACTION__.
+[continue]
+
+> [[WITNESS THE ETERNAL COMPASS ROSE]]
+> [[DENY THE ETERNAL COMPASS ROSE]]
+
+
+:: test-page [test] {"position":"825,475","size":"100,100"}
+# Testing
+
+This is a test page for all of the fancier bits.
+
+***
+
+## Inserts
+
+### The full-width insert.
+
+{full width, text: 'Basic'}
+{full width, text: 'With .fancy.xx', id: 'xx', className: 'fancy' }
+
+### The divider insert.
+
+{divider insert}
+
+### The infocard insert.
+
+{infocard passage: 'Test-Insert-Infocard'}
+
+***
+
+## Modifiers
+
+### The box modifier.
+
+[box]
+A little text.
+**With** ~~Markdown~~.
+[continue]
+
+[box extra-fancy infocard]
+Extra-fancy boxed text styled with .extra-fancy.infocard. The remainder of the box is an embedded passage.
+{embed passage: 'Test-Insert-Infocard'}
+[continue]
+
+[box extra-fancy rose]
+Extra-fancy boxed text styled with .extra-fancy.rose. The remainder of the box is an embedded passage.
+{embed passage: 'Test-Insert-Infocard'}
+[continue]
+
+### The definition modifier.
+
+[definition WORD]
+definition here!
+[continue]
+
+### The move modifier.
+
+[move]
+some fancy stuff here
+[continue]
+
+Visit [[this passage->Test-Clear-Overview]] to clear the overview.
+
+{back link}
+
+
+:: Test-Insert-Infocard [test]
+This is a sample.
+
+**label**: data
+**label**: more data
+
+
+:: Test-Clear-Overview [test]
+The overview section should be gone now.
+[move clear]
+
+[continue]
+
+{back link}
+
+
+:: WITNESS THE ETERNAL COMPASS ROSE [ecr ui]
+This is the full ecr ui.
+
+
+:: YOU
+--
+
+[if you]
+Hello, {you}.
+
+[continue]
+
+# YOU
+
+Who are you?
+
+{text input for: 'you'}
+
+{back link}
+
+
+:: ComponentOverview.js [script]
+"use strict";
+//@ts-ignore
+var modules = globalThis.modules || modules || {};
+globalThis.modules = modules;
+modules.components = modules.components || {};
+modules.components.overview = {
+    moveToOverview: (selector) => {
+        const toMoveSelector = selector
+            ? `.ComponentOverview.${selector}`
+            : '.ComponentOverview';
+        let toMove = document.querySelector(toMoveSelector);
+        if (toMove) {
+            modules.utilities.getOverviewElement().append(toMove);
+        }
+        else {
+            const observer = new MutationObserver((mutationList, observer) => {
+                for (const _mutation of mutationList) {
+                    toMove = document.querySelector(toMoveSelector);
+                    if (toMove) {
+                        modules.utilities.getOverviewElement().append(toMove);
+                        observer.disconnect();
+                        return;
+                    }
+                }
+            });
+            observer.observe(getArticleElement(), {
+                childList: true,
+                attributes: true,
+                subtree: true,
+            });
+        }
+    },
+};
+const getArticleElement = () => {
+    console.log('GAE');
+    const articleEl = document.querySelector('#page article');
+    if (!articleEl) {
+        throw new Error('Overview: article element not found.');
+    }
+    articleEl.classList.add('article');
+    return articleEl;
+};
+const getOverviewElement = () => {
+    console.log('GOE');
+    let overviewEl = document.querySelector('#page article.overview');
+    if (!overviewEl) {
+        overviewEl = document.createElement('article');
+        overviewEl.classList.add('overview');
+    }
+    return overviewEl;
+};
+const modifyMainSection = () => {
+    console.log('GMS');
+    const pageEl = document.querySelector('#page');
+    if (!pageEl) {
+        throw new Error('Overview: #page not found.');
+    }
+    let mainSection = document.querySelector('#page section.main');
+    if (!mainSection) {
+        mainSection = document.createElement('section');
+        mainSection.classList.add('main');
+    }
+    const articleEl = getArticleElement();
+    mainSection.appendChild(articleEl);
+    const overviewEl = getOverviewElement();
+    mainSection.appendChild(overviewEl);
+    const headerEl = document.querySelector('#page header');
+    if (!headerEl) {
+        throw new Error('Overview: #page>header not found.');
+    }
+    headerEl.after(mainSection);
+    return mainSection;
+};
+//# sourceMappingURL=ComponentOverview.js.map
+
+
+:: things.js [script]
+"use strict";
+//# sourceMappingURL=things.js.map
+
+
+:: inserts.js [script]
+"use strict";
+globalThis.modules = globalThis.modules || {};
+globalThis.modules.inserts = globalThis.modules.inserts || {};
+globalThis.modules.inserts.infocard = {
+    match: /^infocard\s+passage/i,
+    render: (firstArg, _props, _invocation) => {
+        const mainRender = engine.render;
+        const passageNamed = engine.story.passageNamed;
+        const passage = passageNamed(firstArg);
+        const result = `<div class="infocard">${mainRender(passage.source)}</div>`;
+        return result;
+    },
+};
+globalThis.modules = globalThis.modules || {};
+globalThis.modules.inserts = globalThis.modules.inserts || {};
+globalThis.modules.inserts.mention = {
+    match: /^mention\s+things/i,
+    render: (firstArg, _props, _invocation) => {
+        const present = engine.state.get(firstArg);
+        const presentAsList = Array.isArray(present)
+            ? present
+            : [present];
+        let result = '';
+        if (presentAsList.length) {
+            result = `<div>${presentAsList.map((p) => '<p>There is a(n) ' + p + ' here.</p>')}
+            </div>`;
+        }
+        return result;
+    },
+};
+/**
+ *
+ */
+globalThis.modules.inserts.fullwidth = {
+    match: /^full\s+width?/i,
+    render: (_, props, _invocation) => {
+        //@ts-ignore
+        const { uniqueClassName } = modules.utilities;
+        const { text, id = uniqueClassName(), className = '' } = props;
+        const result = `<section class="insert fit ${id} ${className}">${text}</section>`;
+        engine.event.once('new-article', () => {
+            fitty(`.fit.${id}`);
+        });
+        return result;
+    },
+};
+globalThis.modules.inserts.divider = {
+    match: /^divider(\s+insert)?/i,
+    render: (_, props, _invocation) => {
+        const { alt = '', src = 'media/rose.png' } = props;
+        const result = `<div class="insert divider"><img src="${src}" alt="${alt}" /><img src="${src}" alt="${alt}" /><img src="${src}" alt="${alt}" /></div>`;
+        return result;
+    },
+};
+//# sourceMappingURL=inserts.js.map
+
+
+:: modifiers.js [script]
+"use strict";
+globalThis.modules = globalThis.modules || {};
+globalThis.modules.modifiers = globalThis.modules.modifiers || {};
+globalThis.modules.modifiers.definition = {
+    match: /^definition/i,
+    process: (output, { invocation }) => {
+        const chunks = invocation.split(/\s+/);
+        chunks.shift();
+        const term = chunks.join(' ');
+        output.text = `<div class="modifier definition"><div class="dt">${term}</div><div class="dd">${output.text}</div></div>`;
+        output.startsNewParagraph = true;
+    },
+};
+globalThis.modules.modifiers.box = {
+    match: /^box/i,
+    process: (output, { invocation }) => {
+        const invocationChunks = invocation.split(/\s+/);
+        const modifierName = invocationChunks.shift();
+        console.log(modifierName);
+        const bits = {};
+        invocationChunks.forEach((c) => {
+            const split = c.split('=');
+            if (split.length === 1) {
+                //@ts-ignore
+                bits[split[0]] = true;
+            }
+            else {
+                //@ts-ignore
+                bits[split[0]] = split[1];
+            }
+        });
+        output.text = `<div class="modifier box ${Object.keys(bits).join(' ')}">${bits.rose
+            ? "<img src='media/rose.png' alt='LITERALIZED rose as decorative item.'>"
+            : ''}${output.text}</div>`;
+        console.log('bits', bits);
+        output.startsNewParagraph = false;
+    },
+};
+globalThis.modules.modifiers.move = {
+    match: /^move/i,
+    process: (output, { invocation }) => {
+        const invocationChunks = invocation.split(/\s+/);
+        const modifierName = invocationChunks.shift();
+        console.log(modifierName);
+        const bits = {};
+        invocationChunks.forEach((c) => {
+            const split = c.split('=');
+            if (split.length === 1) {
+                //@ts-ignore
+                bits[split[0]] = true;
+            }
+            else {
+                //@ts-ignore
+                bits[split[0]] = split[1];
+            }
+        });
+        if (bits.clear) {
+            const overview = modules.utilities.getOverviewElement();
+            overview.innerHTML = '';
+        }
+        const el = document.createElement('div');
+        el.textContent = output.text;
+        const overview = modules.utilities.getOverviewElement();
+        overview.appendChild(el);
+        output.text = '';
+        output.startsNewParagraph = false;
+    },
+};
+//# sourceMappingURL=modifiers.js.map
+
+
+:: utilities.js [script]
+"use strict";
+globalThis.modules || globalThis.modules || {};
+globalThis.modules.utilities = globalThis.modules.utilities || {};
+globalThis.modules.utilities.toSafeClassName = (s) => {
+    const unsafe = s.toString();
+    const safe = encodeURIComponent(unsafe)
+        .toLowerCase()
+        .replace(/\.|%[0-9a-z]{2}/gi, '');
+    return 'X' + safe;
+};
+globalThis.modules.utilities.uuidv4 = (() => {
+    const UUID_V4_FORMAT = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
+    const uuidv4 = (format = UUID_V4_FORMAT) => format.replace(/[xy]/g, function (c) {
+        const r = (Math.random() * 16) | 0, v = c == 'x' ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+    });
+    return uuidv4;
+})();
+globalThis.modules.utilities.uniqueClassName = () => modules.utilities.toSafeClassName(modules.utilities.uuidv4());
+globalThis.modules.utilities.onMutation = (selector, cb) => {
+    const article = document.querySelector(`#page article`);
+    if (!article) {
+        throw new Error('No main div?');
+    }
+    let node = article.querySelector(selector);
+    if (node) {
+        cb(node);
+    }
+    else {
+        const observer = new MutationObserver((mutationList, observer) => {
+            for (const _mutation of mutationList) {
+                const node = article.querySelector(selector);
+                if (node) {
+                    cb(node);
+                    observer.disconnect();
+                    return;
+                }
+            }
+        });
+        observer.observe(article, {
+            childList: true,
+            attributes: true,
+            subtree: true,
+        });
+    }
+};
+globalThis.modules.utilities.getOverviewElement = () => {
+    let overviewEl = document.querySelector('#page article.overview');
+    if (!overviewEl) {
+        overviewEl = document.createElement('article');
+        overviewEl.classList.add('overview');
+    }
+    return overviewEl;
+};
+globalThis.modules.utilities.setupDOM = () => {
+    const mainSection = document.querySelector('#page section.main') ||
+        document.createElement('section');
+    mainSection.classList.add('main');
+    const overviewArticle = document.querySelector('#page article.overview') ||
+        document.createElement('article');
+    overviewArticle.classList.add('overview');
+    const articleArticle = document.querySelector('#page>article') ||
+        document.createElement('article');
+    articleArticle.classList.add('article');
+    const headerEl = document.querySelector('#page header');
+    if (!headerEl) {
+        throw new Error('Overview: #page>header not found.');
+    }
+    headerEl.after(mainSection);
+    mainSection.append(articleArticle);
+    mainSection.append(overviewArticle);
+};
+//# sourceMappingURL=utilities.js.map
+
+
+:: fitty.js [script]
+"use strict";
+var fitty = (() => {
+    // node list to array helper method
+    //@ts-ignore
+    const toArray = (nl) => [].slice.call(nl);
+    // states
+    const DrawState = {
+        IDLE: 0,
+        DIRTY_CONTENT: 1,
+        DIRTY_LAYOUT: 2,
+        DIRTY: 3,
+    };
+    // all active fitty elements
+    //@ts-ignore
+    let fitties = [];
+    // group all redraw calls till next frame, we cancel each frame request when a new one comes in. If no support for request animation frame, this is an empty function and supports for fitty stops.
+    //@ts-ignore
+    let redrawFrame = null;
+    const requestRedraw = (options = { sync: false }) => {
+        //@ts-ignore
+        cancelAnimationFrame(redrawFrame);
+        const redrawFn = () => 
+        //@ts-ignore
+        redraw(fitties.filter((f) => f.dirty && f.active));
+        if (options.sync)
+            return redrawFn();
+        redrawFrame = requestAnimationFrame(redrawFn);
+    };
+    // sets all fitties to dirty so they are redrawn on the next redraw loop, then calls redraw
+    //@ts-ignore
+    const redrawAll = (type) => (options) => {
+        //@ts-ignore
+        fitties.forEach((f) => (f.dirty = type));
+        requestRedraw(options);
+    };
+    // redraws fitties so they nicely fit their parent container
+    //@ts-ignore
+    const redraw = (fitties) => {
+        // getting info from the DOM at this point should not trigger a reflow, let's gather as much intel as possible before triggering a reflow
+        // check if styles of all fitties have been computed
+        fitties
+            //@ts-ignore
+            .filter((f) => !f.styleComputed)
+            //@ts-ignore
+            .forEach((f) => {
+            f.styleComputed = computeStyle(f);
+        });
+        // restyle elements that require pre-styling, this triggers a reflow, please try to prevent by adding CSS rules (see docs)
+        fitties.filter(shouldPreStyle).forEach(applyStyle);
+        // we now determine which fitties should be redrawn
+        const fittiesToRedraw = fitties.filter(shouldRedraw);
+        // we calculate final styles for these fitties
+        fittiesToRedraw.forEach(calculateStyles);
+        // now we apply the calculated styles from our previous loop
+        fittiesToRedraw.forEach((f) => {
+            applyStyle(f);
+            markAsClean(f);
+        });
+        // now we dispatch events for all restyled fitties
+        fittiesToRedraw.forEach(dispatchFitEvent);
+    };
+    const markAsClean = (f) => (f.dirty = DrawState.IDLE);
+    const calculateStyles = (f) => {
+        // get available width from parent node
+        f.availableWidth = f.element.parentNode.clientWidth;
+        // the space our target element uses
+        f.currentWidth = f.element.scrollWidth;
+        // remember current font size
+        f.previousFontSize = f.currentFontSize;
+        // let's calculate the new font size
+        f.currentFontSize = Math.min(Math.max(f.minSize, (f.availableWidth / f.currentWidth) * f.previousFontSize), f.maxSize);
+        // if allows wrapping, only wrap when at minimum font size (otherwise would break container)
+        f.whiteSpace =
+            f.multiLine && f.currentFontSize === f.minSize
+                ? 'normal'
+                : 'nowrap';
+    };
+    // should always redraw if is not dirty layout, if is dirty layout, only redraw if size has changed
+    //@ts-ignore
+    const shouldRedraw = (f) => f.dirty !== DrawState.DIRTY_LAYOUT ||
+        (f.dirty === DrawState.DIRTY_LAYOUT &&
+            f.element.parentNode.clientWidth !== f.availableWidth);
+    // every fitty element is tested for invalid styles
+    //@ts-ignore
+    const computeStyle = (f) => {
+        // get style properties
+        const style = getComputedStyle(f.element, null);
+        // get current font size in pixels (if we already calculated it, use the calculated version)
+        f.currentFontSize = parseFloat(style.getPropertyValue('font-size'));
+        // get display type and wrap mode
+        f.display = style.getPropertyValue('display');
+        f.whiteSpace = style.getPropertyValue('white-space');
+        // styles computed
+        return true;
+    };
+    // determines if this fitty requires initial styling, can be prevented by applying correct styles through CSS
+    const shouldPreStyle = (f) => {
+        let preStyle = false;
+        // if we already tested for prestyling we don't have to do it again
+        if (f.preStyleTestCompleted)
+            return false;
+        // should have an inline style, if not, apply
+        if (!/inline-/.test(f.display)) {
+            preStyle = true;
+            f.display = 'inline-block';
+        }
+        // to correctly calculate dimensions the element should have whiteSpace set to nowrap
+        if (f.whiteSpace !== 'nowrap') {
+            preStyle = true;
+            f.whiteSpace = 'nowrap';
+        }
+        // we don't have to do this twice
+        f.preStyleTestCompleted = true;
+        return preStyle;
+    };
+    // apply styles to single fitty
+    const applyStyle = (f) => {
+        f.element.style.whiteSpace = f.whiteSpace;
+        f.element.style.display = f.display;
+        f.element.style.fontSize = f.currentFontSize + 'px';
+    };
+    // dispatch a fit event on a fitty
+    const dispatchFitEvent = (f) => {
+        f.element.dispatchEvent(new CustomEvent('fit', {
+            detail: {
+                oldValue: f.previousFontSize,
+                newValue: f.currentFontSize,
+                scaleFactor: f.currentFontSize / f.previousFontSize,
+            },
+        }));
+    };
+    // fit method, marks the fitty as dirty and requests a redraw (this will also redraw any other fitty marked as dirty)
+    //@ts-ignore
+    const fit = (f, type) => (options) => {
+        f.dirty = type;
+        if (!f.active)
+            return;
+        requestRedraw(options);
+    };
+    const init = (f) => {
+        // save some of the original CSS properties before we change them
+        f.originalStyle = {
+            whiteSpace: f.element.style.whiteSpace,
+            display: f.element.style.display,
+            fontSize: f.element.style.fontSize,
+        };
+        // should we observe DOM mutations
+        observeMutations(f);
+        // this is a new fitty so we need to validate if it's styles are in order
+        f.newbie = true;
+        // because it's a new fitty it should also be dirty, we want it to redraw on the first loop
+        f.dirty = true;
+        // we want to be able to update this fitty
+        fitties.push(f);
+    };
+    const destroy = (f) => () => {
+        // remove from fitties array
+        fitties = fitties.filter((_) => _.element !== f.element);
+        // stop observing DOM
+        if (f.observeMutations)
+            f.observer.disconnect();
+        // reset the CSS properties we changes
+        f.element.style.whiteSpace = f.originalStyle.whiteSpace;
+        f.element.style.display = f.originalStyle.display;
+        f.element.style.fontSize = f.originalStyle.fontSize;
+    };
+    // add a new fitty, does not redraw said fitty
+    const subscribe = (f) => () => {
+        if (f.active)
+            return;
+        f.active = true;
+        requestRedraw();
+    };
+    // remove an existing fitty
+    const unsubscribe = (f) => () => (f.active = false);
+    const observeMutations = (f) => {
+        // no observing?
+        if (!f.observeMutations)
+            return;
+        // start observing mutations
+        f.observer = new MutationObserver(fit(f, DrawState.DIRTY_CONTENT));
+        // start observing
+        f.observer.observe(f.element, f.observeMutations);
+    };
+    // default mutation observer settings
+    const mutationObserverDefaultSetting = {
+        subtree: true,
+        childList: true,
+        characterData: true,
+    };
+    // default fitty options
+    const defaultOptions = {
+        minSize: 16,
+        maxSize: 512,
+        multiLine: true,
+        observeMutations: mutationObserverDefaultSetting,
+    };
+    // array of elements in, fitty instances out
+    function fittyCreate(elements, options) {
+        // set options object
+        const fittyOptions = Object.assign({}, 
+        // expand default options
+        defaultOptions, 
+        // override with custom options
+        options);
+        // create fitties
+        const publicFitties = elements.map((element) => {
+            // create fitty instance
+            const f = Object.assign({}, fittyOptions, {
+                // internal options for this fitty
+                element,
+                active: true,
+            });
+            // initialise this fitty
+            init(f);
+            // expose API
+            return {
+                element,
+                fit: fit(f, DrawState.DIRTY),
+                unfreeze: subscribe(f),
+                freeze: unsubscribe(f),
+                unsubscribe: destroy(f),
+            };
+        });
+        // call redraw on newly initiated fitties
+        requestRedraw();
+        // expose fitties
+        return publicFitties;
+    }
+    // fitty creation function
+    function fitty(target, options = {}) {
+        // if target is a string
+        return typeof target === 'string'
+            ? // treat it as a querySelector
+                fittyCreate(toArray(document.querySelectorAll(target)), options)
+            : // create single fitty
+                fittyCreate([target], options)[0];
+    }
+    // handles viewport changes, redraws all fitties, but only does so after a timeout
+    let resizeDebounce = null;
+    const onWindowResized = () => {
+        clearTimeout(resizeDebounce);
+        resizeDebounce = setTimeout(redrawAll(DrawState.DIRTY_LAYOUT), fitty.observeWindowDelay);
+    };
+    // define observe window property, so when we set it to true or false events are automatically added and removed
+    const events = ['resize', 'orientationchange'];
+    Object.defineProperty(fitty, 'observeWindow', {
+        set: (enabled) => {
+            events.forEach((e) => {
+                if (enabled) {
+                    addEventListener(e, onWindowResized);
+                }
+                else {
+                    removeEventListener(e, onWindowResized);
+                }
+            });
+        },
+    });
+    // fitty global properties (by setting observeWindow to true the events above get added)
+    fitty.observeWindow = true;
+    fitty.observeWindowDelay = 100;
+    // public fit all method, will force redraw no matter what
+    fitty.fitAll = redrawAll(DrawState.DIRTY);
+    // export our fitty function, we don't want to keep it to our selves
+    //@ts-ignore
+    return fitty;
+})();
+globalThis.fitty = fitty;
+//# sourceMappingURL=fitty.js.map
+
+
+:: z_story.js [script]
+"use strict";
+engine.extend('1.0.0', () => {
+    console.log('Extending engine.');
+    console.log('Adding Inserts:', Object.keys(modules.inserts));
+    config.template.inserts = [
+        ...Object.values(modules.inserts),
+        ...config.template.inserts,
+    ];
+    console.log('Adding Modifiers:', Object.keys(modules.modifiers));
+    config.template.modifiers = [
+        ...Object.values(modules.modifiers),
+        ...config.template.modifiers,
+    ];
+    console.log('Inserts & Modifiers added.', config.template);
+    // Testing mode?
+    config.testing = true;
+    if (config.testing) {
+        // link to the test page.
+        config.header.left = '[[test-page]]';
+        // log more things
+        // create events for each log source (action, render, parse, etc)
+        engine.event.on('*', (name, e) => {
+            if (name === 'log') {
+                engine.event.emit(e.source, e);
+            }
+            else {
+                // console.log(name, e);
+            }
+        });
+    }
+    // help?kk
+    modules.utilities.setupDOM();
+    engine.event.on('article-new', () => {
+        const overview = document.querySelector('#page section.main article.overview');
+        if (overview) {
+            overview.innerHTML = '';
+        }
+    });
+    // emit an event when the article element changes
+    (() => {
+        const article = document.querySelector(`#page article`);
+        if (!article) {
+            throw new Error('Bad HTML: no article element.');
+        }
+        const observer = new MutationObserver((mutationList, _observer) => {
+            console.log(mutationList.length, 'mutations.');
+            console.log(mutationList);
+            let childrenAdded = 0;
+            //let attributesChanged = 0;
+            let childrenRemoved = 0;
+            for (const mutation of mutationList) {
+                if (mutation.type === 'childList') {
+                    if (mutation.addedNodes.length > 0) {
+                        childrenAdded++;
+                    }
+                    if (mutation.removedNodes.length > 0) {
+                        childrenRemoved++;
+                    }
+                    // engine.event.emit('article-mutation-childList', mutation);
+                }
+                else if (mutation.type === 'attributes') {
+                    //engine.event.emit('article-mutation-attributes', mutation);
+                }
+                else {
+                    //engine.event.emit('article-mutation', mutation);
+                }
+            }
+            if (childrenAdded) {
+                engine.event.emit('article-new', { target: article });
+            }
+            console.log('nothing.');
+        });
+        observer.observe(article, {
+            childList: true,
+            //attributes: true,
+            subtree: false,
+        });
+    })();
+    console.log('Engine updated.');
+});
+//# sourceMappingURL=z_story.js.map
+
+

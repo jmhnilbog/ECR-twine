@@ -8,7 +8,8 @@
     "watch-tsc": "npx tsc -w",
     "clean-artifacts": "rm -rf artifacts/js",
     "clean-build": "rm build/index.*",
-    "clean": "npm run clean-artifacts && npm run clean-build"
+    "clean": "npm run clean-artifacts && npm run clean-build",
+    "build-twee": "tweego -d -l src artifacts -o build/index.twee"
   },
   "author": "John Mark Hawley",
   "devDependencies": {

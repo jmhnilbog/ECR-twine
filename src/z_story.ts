@@ -34,6 +34,7 @@ engine.extend('1.0.0', () => {
         );
     }
 
+    // help?kk
     modules.utilities.setupDOM();
 
     engine.event.on('article-new', () => {

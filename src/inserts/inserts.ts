@@ -59,7 +59,9 @@ globalThis.modules.inserts.fullwidth = {
 
         const result = `<section class="insert fit ${id} ${className}">${text}</section>`;
 
-        engine.event.once('new-article', () => {
+        console.log('LISTENING FOR ARTICLE-new');
+        engine.event.once('article-new', () => {
+            console.log('ARTICLE-new');
             fitty(`.fit.${id}`);
         });
 
