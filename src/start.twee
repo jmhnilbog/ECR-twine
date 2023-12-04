@@ -8,10 +8,14 @@ ETERNAL COMPASS ROSE
   "format": "Chapbook",
   "format-version": "1.2.3",
   "start": "Start",
+  "tag-colors": {
+     "start": "green",
+     "ui": "red"
+   },
   "zoom": 1
 }
 
-:: Start {"position":"700,350","size":"100,100"}
+:: Start [start] {"position":"700,350","size":"100,100"}
 
 {full width, text: 'Congratulations', className: 'delicate fade-in'}
 
@@ -30,37 +34,112 @@ are due to
 }
 [continue]
 
-:: Start-1
+:: Start-1 [start]
 
 {full width, text: 'YOU'}
 
-have discovered this media fully describing
+have [[discovered **this media** fully->Start-2]] describing
 
-[box rose]
+:: Start-2 [start]
+
+[box rose fade-in-500 xlarge]
+
 **Eternal**
 **Compass**
 **Rose**
+
 [continue]
 
+[typewriter 50 2 backwards]
 perfectly redacted, paginated, and conceptually codified for your approximate
+[continue]
+[typewriter 500 word]
+perfectly redacted, paginated, and conceptually codified for your approximate
+[continue]
 
-# **ETERNAL COMPASS ROSE**
+[after 5000ms]
+# **ETERNAL COMPASS ROSE** [[coordinates->Start-3]]
+[cont]
 
-coordinates in a semi-narrative hypertextual format indubitably known scientifically to be correct and good in all aspects, dimensions, simulations and other narrative structures.
+:: Start-3 [start]
+[box xlarge]
+coordinates
+[cont]
+in a semi-narrative hypertextual format indubitably known scientifically to be correct and good in all aspects, dimensions, simulations and other narrative structures.
 
-**Interactions with ETERNAL COMPASS ROSE begin joyfully.**
+> [[Interactions with ETERNAL COMPASS ROSE begin joyfully.->Start-4]]
 
-Those who engage with this media, aka the reader, are encouraged to annotate and share it by the organizing principles of ETERNAL COMPASS ROSE (ECR). This media is designed to respond and adapt to annotation as well as to movement along ~~e~~ach ~~c~~ommon ~~r~~ule.
 
-[box]
+:: Start-4 [start]
+
+## The reader(**{reveal link: '\[S\]', text: '‽'}**), aka and also including those who engage with this media, aka 
+
+### the reader, 
+
+are encouraged to annotate and share it by the organizing principles of ETERNAL COMPASS ROSE (ECR). This media is designed to respond and adapt to annotation as well as to movement along ~~e~~ach ~~c~~ommon ~~r~~ule.
+
+[box xlarge left]
 **ETERNAL COMPASS ROSE** presents information about ~~**E**VERY **C**OUNTABLE **R**EALITY~~ to you by the methods of analogy, parable and commentary in a hypertextual format. With this excellent communication recipe you will meet with **success**!
 [continue]
 
-[box warning]
-## WARNING
+### Encountering Carnivorous Rabbits: 
 
+{full width, text: '[[A !!~~WARNING~~!!->Start-5]]'}
+
+[CSS]
+
+#page article.article>div{
+  display: flex;
+  align-items: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: stretch;
+  justify-content: center;
+}
+
+#page article.article>div>*:nth-child(odd) {
+    width: fit-content;
+    flex: 1 1 0;
+}
+[cont]
+
+
+:: Start-5 [start]
+
+[box warning vertical]
+## WARNING *WAR*NING WAR*N*ING WARN*ING* !!!
+[cont]
+
+[box warning]
 Partial Understanding is not guaranteed. Full understanding is heretical to the glorious ETERNAL COMPASS ROSE. **Heresy** is punishable by __REDACTION__.
-[continue]
 
 > [[WITNESS THE ETERNAL COMPASS ROSE]]
+[cont]
 > [[DENY THE ETERNAL COMPASS ROSE]]
+
+[CSS]
+
+#page article.article>div{
+  display: flex;
+  align-items: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: stretch;
+  justify-content: center;
+}
+
+#page article.article>div>* {
+    display: unset;
+    margin: 0 1em;
+    flex: 1 1;
+}
+
+#page article.article>div>style {
+  display: none;
+}
+
+#page article.article>div>script {
+  display: none;
+}
+
+[cont]

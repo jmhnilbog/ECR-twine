@@ -33,7 +33,7 @@
             repeatCount="indefinite"
         />
 	</line>
-</svg></div></div></div></form><!-- UUID://992209DC-A153-48BF-9F4F-B281A1FCFAC8// --><tw-storydata name="ETERNAL COMPASS ROSE" startnode="22" creator="Tweego" creator-version="2.1.1+81d1d71" ifid="992209DC-A153-48BF-9F4F-B281A1FCFAC8" zoom="1" format="Chapbook" format-version="1.2.3" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">/* twine-user-stylesheet #1: "_story.css" */
+</svg></div></div></div></form><!-- UUID://992209DC-A153-48BF-9F4F-B281A1FCFAC8// --><tw-storydata name="ETERNAL COMPASS ROSE" startnode="20" creator="Tweego" creator-version="2.1.1+81d1d71" ifid="992209DC-A153-48BF-9F4F-B281A1FCFAC8" zoom="1" format="Chapbook" format-version="1.2.3" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">/* twine-user-stylesheet #1: "_story.css" */
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Neuton:ital,wght@0,200;0,300;0,400;0,700;0,800;1,400&family=Oleo+Script:wght@400;700&family=Rouge+Script&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=block');
 
 #page article .technical {
@@ -104,6 +104,14 @@
     background-color: hsla(0, 100%, 98.03921568627452%, 1);
     color: hsla(0, 73.83966244725738%, 53.529411764705884%, 1);
 }
+
+.vertical {
+    writing-mode: vertical-lr;
+}
+
+#page section.main {
+    margin-bottom: 3em;
+}
 /* twine-user-stylesheet #2: "fades.css" */
 .fade-in-500 {
     animation: fade-in 1s ease-out forwards;
@@ -156,11 +164,12 @@
     background: #0fcc0f;
     border: 1em solid rgb(86, 38, 154);
 }
-.modifier.box.rose {
-    font-family: 'Marcellus';
+#page .modifier.box.rose {
+    font-family: 'Archivo Narrow';
     padding: 1em;
     border: 0.5em solid #f0fd;
     background-color: #f0f4;
+    line-height: 1;
 }
 
 .modifier.box.rose>* {
@@ -319,6 +328,27 @@ globalThis.modules.inserts.divider = {
         return result;
     },
 };
+globalThis.modules.inserts.previous = (() => {
+    const renderLink = (target, label) => {
+        // Does the target look like an external link?
+        if (/^\w+:\/\/\/?\w/i.test(target)) {
+            return `<a href="${target}">${label || target}</a>`;
+        }
+        // We'll treat it as an internal one if not.
+        return `<a href="${'javascript:void(0)'}" data-cb-go="${target}">${label || target}</a>`;
+    };
+    return {
+        match: /^previous\s+link/i,
+        render(_, props) {
+            const trail = [...engine.state.get('trail')];
+            // find the first passage in the trail different from this passage.
+            trail.reverse();
+            const currentPassage = trail.shift();
+            const previousPassage = trail.find((p) => p !== currentPassage) || trail.pop();
+            return renderLink(previousPassage, props.label || 'Back');
+        },
+    };
+})();
 //# sourceMappingURL=inserts.js.map
 /* twine-user-script #4: "modifiers.js" */
 "use strict";
@@ -327,10 +357,15 @@ globalThis.modules.modifiers = globalThis.modules.modifiers || {};
 globalThis.modules.modifiers.definition = {
     match: /^definition/i,
     process: (output, { invocation }) => {
+        const { wrapMarkdown } = modules.utilities;
         const chunks = invocation.split(/\s+/);
         chunks.shift();
         const term = chunks.join(' ');
-        output.text = `<div class="modifier definition"><div class="dt">${term}</div><div class="dd">${output.text}</div></div>`;
+        output.text = `<div class="dt">${term}</div><div class="dd">${output.text}</div>`;
+        output.text = wrapMarkdown(output.text, {
+            'data-cb-skippable': '',
+            class: 'modifier definition',
+        });
         output.startsNewParagraph = true;
     },
 };
@@ -352,11 +387,15 @@ globalThis.modules.modifiers.box = {
                 bits[split[0]] = split[1];
             }
         });
-        output.text = `<div class="modifier box ${Object.keys(bits).join(' ')}">${bits.rose
-            ? "<img src='media/rose.png' alt='LITERALIZED rose as decorative item.'>"
-            : ''}${output.text}</div>`;
-        console.log('bits', bits);
-        output.startsNewParagraph = false;
+        if (bits.rose) {
+            output.text = `<img src='media/rose.png' alt='LITERALIZED rose as decorative item.'>${output.text}`;
+        }
+        const { wrapMarkdown } = modules.utilities;
+        output.text = wrapMarkdown(output.text, {
+            class: `modifier box ${Object.keys(bits).join(' ')}`,
+            'data-cb-skippable': '',
+        });
+        output.startsNewParagraph = true;
     },
 };
 globalThis.modules.modifiers.move = {
@@ -393,20 +432,41 @@ globalThis.modules.modifiers.typewriter = {
     match: /^typewriter\s/i,
     process(output, { invocation }) {
         // Get the time
-        let time = invocation.replace(/^typewriter\s/i, '');
+        let [time, chunkSize = 1, backwards = false] = invocation
+            .replace(/^typewriter\s/i, '')
+            .split(' ');
+        if (isNaN(parseInt(chunkSize, 10))) {
+            if (chunkSize === 'backwards') {
+                backwards = true;
+            }
+            else if (chunkSize !== 'word') {
+                chunkSize = 1;
+            }
+        }
         // Save original text
         let text = output.text;
-        // Get length of original text
-        let length = text.length;
         // Wipe out output to start
         output.text = '';
+        let chunkedLetters = [];
+        if (chunkSize === 'word') {
+            text.split(' ').forEach((t) => chunkedLetters.push([t, ' ']));
+        }
+        else {
+            const letters = text.split('');
+            while (letters.length) {
+                chunkedLetters.push(letters.splice(0, chunkSize));
+            }
+        }
+        if (backwards) {
+            chunkedLetters.reverse();
+        }
         // Loop through the text
         //  -- Add a new <span> for each character
         //  -- Set the class "fade-in"
         //  -- Set the delay as equal to time multiplied position
-        for (let i = 0; i < length; i++) {
-            output.text += `<span class='fade-in' style='animation-delay: ${time * i}ms'>${text[i]}</span>`;
-        }
+        output.text = chunkedLetters
+            .map((chunk, i) => `<span class='fade-in' style='animation-delay: ${time * i}ms'>${(chunk === null || chunk === void 0 ? void 0 : chunk.join('')) || chunk}</span>`)
+            .join('');
     },
 };
 //# sourceMappingURL=modifiers.js.map
@@ -414,6 +474,21 @@ globalThis.modules.modifiers.typewriter = {
 "use strict";
 globalThis.modules || globalThis.modules || {};
 globalThis.modules.utilities = globalThis.modules.utilities || {};
+/**
+ * Sometimes you'd like to wrap a block of Markdown text in a <div> tag to apply
+ * some effect to it... but doing so turns off Markdown paragraphing inside the tag
+ * because Markdown leaves block tags alone. This module wraps each paragraph in
+ * Markdown in a <span> for you.
+ */
+globalThis.modules.utilities.wrapMarkdown = (markdown, attributes = {}) => {
+    const tag = '<span' +
+        Object.keys(attributes).reduce((result, current) => result + ` ${current}="${attributes[current]}"`, '') +
+        '>';
+    let output = tag + markdown.replace(/[\r\n]{2,}/g, `</span>$&${tag}`) + '</span>';
+    /* Move <span>s after any setext-style headers. */
+    output = output.replace(/(<span.*?>)\s*(#+)/gi, '$2 $1');
+    return output;
+};
 globalThis.modules.utilities.toSafeClassName = (s) => {
     const unsafe = s.toString();
     const safe = encodeURIComponent(unsafe)
@@ -833,55 +908,69 @@ engine.extend('1.0.0', () => {
         });
     })();
     console.log('Engine updated.');
+    console.log('Setting state defaults.');
+    engine.state.set('reader.canInspectSelf', false);
 });
-//# sourceMappingURL=z_story.js.map</script><tw-passagedata pid="1" name="DENY THE ETERNAL COMPASS ROSE" tags="" position="100,100" size="100,100">perspective: &#39;reader&#39;
+//# sourceMappingURL=z_story.js.map</script><tw-tag name="start" color="green"></tw-tag><tw-tag name="ui" color="red"></tw-tag><tw-passagedata pid="1" name="DENY THE ETERNAL COMPASS ROSE" tags="" position="100,100" size="100,100">perspective: &#39;reader&#39;
 location: &#39;at the computer&#39;
+reader.canInspectSelf: false || reader.canInspectSelf
 --
 
-You deny the majestic ETERNAL COMPASS ROSE.
+You deny the majestic
 
-There&#39;s not much going on, though. 
+{full width, text: &#39;eternal&#39;, className: &#39;delicate&#39;}
+
+{full width, text: &#39;COMPASS ROSE&#39;, className: &#39;elaborate&#39;}
+
+There&#39;s not much going on, though. You&#39;re a very regular person.
+That&#39;s what you assume. You have no evidence otherwise.
 
 &gt; [[Look around.-&gt;{location} look around]]
-&gt; [[Look inward.-&gt;Look at self]]
-&gt; [[Access the ETERNAL COMPASS ROSE.-&gt;Start]]</tw-passagedata><tw-passagedata pid="2" name="Look at self" tags="" position="225,100" size="100,100">Huh.</tw-passagedata><tw-passagedata pid="3" name="at the computer look around" tags="" position="350,100" size="100,100">present: [&#39;computer&#39;]
+&gt; [[Look inward.-&gt;look at self]]
+[if reader.canInspectSelf]
+&gt; [[Look **AT** yourself.-&gt;describe self]]
+[cont]
+&gt; [[Access the ETERNAL COMPASS ROSE.-&gt;Start]]</tw-passagedata><tw-passagedata pid="2" name="look at self" tags="" position="225,100" size="100,100">reader.canInspectSelf: passage.visits&gt;7
+--
+
+You are at the very brink of a personal revelation.
+
+[if passage.visits&gt;5]
+You&#39;re getting somewhere.
+
+[if passage.visits&gt;7]
+Did you want a [[description of yourself-&gt;describe self]]? Maybe that&#39;s what you meant when you indicated, over and over again, that you wanted to look inward. It&#39;s a strange way to phrase a request like that, though.
+
+Say what you mean.
+
+[if passage.visits&gt;15]
+You feel that you may be neglecting more important things.
+
+[if passage.visits&gt;25]
+That ECR thing. What was that all about?
+
+[if passage.visits&gt;50]
+&gt; [[Remember something.-&gt;Remember]]
+[cont]
+&gt; [[Look inward, further.-&gt;look at self]]
+&gt; {previous link}</tw-passagedata><tw-passagedata pid="3" name="at the computer look around" tags="" position="350,100" size="100,100">present: [&#39;computer&#39;]
+_p: 
 --
 The reader is sitting at a computer, on which they have recently encountered ETERNAL COMPASS ROSE.
 
-{embed passage: &#39;_Callouts&#39;}</tw-passagedata><tw-passagedata pid="4" name="_Callouts" tags="partial" position="475,100" size="100,100">{mention things: present }</tw-passagedata><tw-passagedata pid="5" name="ECR-UI" tags="ecr ui" position="600,100" size="100,100">config.header.right: &#39;[[Glossary]]&#39;
---
+The reader is a
 
-{ embed passage: &#39;Themes-ecr-ui-values&#39;}
+{full width, text: &#39;YOU&#39;}
 
-{ embed passage: &#39;Fit-1&#39;}
+{back link}</tw-passagedata><tw-passagedata pid="4" name="describe self" tags="" position="475,100" size="100,100">You don&#39;t have a mirror.
 
-As an **INITIATE** of the mysterious _Eternal Compass Rose_, you have partial access to a single primary CID narrative and several sub-narratives within it. Incredible!
+{full width, text: &#39;The End&#39;}
 
----
+{restart link}</tw-passagedata><tw-passagedata pid="5" name="Remember" tags="" position="600,100" size="100,100">This hasn&#39;t been placed, yet.
 
-**CID**: PArTy-p00p3R5\
-**Narrative Indices**: 7aXa_84.b.\*.a   
-**Seeds**: RNG(3d6x6)\
-**Resolution Coefficients**: T=(3.2 x 10^-10 s), L=(1.6 \* 10^-35 m), U=(1.2 \* 10^18 u)\
-**Primary Sub-narrative CIDs**: Earf-[\*], CORVETTE-End-times-Bestian-[T&lt;10^51, T&gt;10^200], Bezos-[933], Total-LY-8OS  
+{full width, text: &#39;The End&#39;}
 
-&gt; [[WHAT IS: a CID?-&gt;glossary-cid]]
-&gt; [[ACCESS SUBNARRATIVE: Earf-[\*]-&gt;Earf]]
-&gt; [[ACCESS SUBNARRATIVE: CORVETTE-End-times-Bestian-[T&lt;10^51, T&gt;10^200]-&gt;Corvette Endtimes]]
-&gt; [[ACCESS SUBNARRATIVE: LIFE-Bestian-[T~10^51]-&gt;Early Life]]
-
----
-
-Learn, be changed!
-
-{ embed passage: &#39;Themes-ecr-ui&#39; }</tw-passagedata><tw-passagedata pid="6" name="Fit-1" tags="" position="725,100" size="100,100">content: &#39;Fit-1-1&#39;
---
-{embed passage: &#39;Fit&#39;}</tw-passagedata><tw-passagedata pid="7" name="Fit-1-1" tags="" position="850,100" size="100,100"># Eternal Compass Rose
-
-[CSS]
-#page .Fit {
-    background: black;
-}</tw-passagedata><tw-passagedata pid="8" name="Glossary" tags="" position="975,100" size="100,100"># Glossary
+{restart link}</tw-passagedata><tw-passagedata pid="6" name="Glossary" tags="" position="725,100" size="100,100"># Glossary
 
 &lt;details&gt;
 &lt;summary&gt;CID&lt;/summary&gt;
@@ -891,7 +980,7 @@ Learn, be changed!
 &lt;details&gt;
 &lt;summary&gt;Narrative&lt;/summary&gt;
 {embed passage: &#39;glossary-narrative&#39;}
-&lt;/details&gt;</tw-passagedata><tw-passagedata pid="9" name="glossary-cid" tags="" position="1100,100" size="100,100"># CID
+&lt;/details&gt;</tw-passagedata><tw-passagedata pid="7" name="glossary-cid" tags="" position="850,100" size="100,100"># CID
 
 A **CID** is a unique reference to a set of [[narratives-&gt;glossary-narrative]] identified and codified within the [[Eternal Compass Rose-&gt;glossary-eternal-compass-rose]]. It describes the types of narratives within the set and supplies friendly nicknames for those most referenced, which the reader is sure to find delightful.
 
@@ -910,7 +999,7 @@ Let us examime the structure of the CID in which [[the reader-&gt;glossary-the-r
 
 
 
-{back link}</tw-passagedata><tw-passagedata pid="10" name="glossary-ecr" tags="glossary" position="1225,100" size="100,100"># ETERNAL COMPASS ROSE
+{back link}</tw-passagedata><tw-passagedata pid="8" name="glossary-ecr" tags="glossary" position="975,100" size="100,100"># ETERNAL COMPASS ROSE
 
 Every system contains theorems that may not be proven within that system.
 
@@ -920,13 +1009,13 @@ The ULTIMATE CATALOG is a system that enumerates all countably infinite possible
 
 Those narratives that may not be indexed by the ULTIMATE CATALOG compose NULLSPACE. Observation of NULLSPACE from a countably infinite dimensional remove reveals
 
-ETERNAL COMPASS ROSE</tw-passagedata><tw-passagedata pid="11" name="glossary-religion" tags="" position="100,225" size="100,100">bible as post apocalyptic literature, each book by different author/conflicting story as different author, use apocrypha as well. Genesis in reverse? Void actually spectrum, unnamed, naming causes disruption. Separation of waters destroys peace, manifestation of consciousness.</tw-passagedata><tw-passagedata pid="12" name="glossary-eternal-compass-rose" tags="" position="225,225" size="100,100">Narrative may be described using a small number of dimensions. These make up the eternal compass rose: spatial x-y-z, a simulation identifier, probability notation, metaphysical level, and time.
+ETERNAL COMPASS ROSE</tw-passagedata><tw-passagedata pid="9" name="glossary-religion" tags="" position="1100,100" size="100,100">bible as post apocalyptic literature, each book by different author/conflicting story as different author, use apocrypha as well. Genesis in reverse? Void actually spectrum, unnamed, naming causes disruption. Separation of waters destroys peace, manifestation of consciousness.</tw-passagedata><tw-passagedata pid="10" name="glossary-eternal-compass-rose" tags="" position="1225,100" size="100,100">Narrative may be described using a small number of dimensions. These make up the eternal compass rose: spatial x-y-z, a simulation identifier, probability notation, metaphysical level, and time.
 
 Simulation identifiers are similar to Dewey decimal notation. The primary forms of simulation are imagination and memory. Computational simulation and play are forms of imagination. Memory simulations are the lowest in fidelity.
 
 Metaphysical level indicates the positive or negative perfection of the universe. Heavens and hells are at high levels of positive and negative metaphysics.
 
-Probabilities of zero or less are controlled by Chaos. Probabilities between zero and one indicate the presence of parallel universes and alternate outcomes. Fully resolved simulations have probability 1. Probabilities greater than one are result values of completed simulations.</tw-passagedata><tw-passagedata pid="13" name="glossary-utlimate-catalog" tags="" position="350,225" size="100,100">Every system contains theorems that may not be proven within that system.
+Probabilities of zero or less are controlled by Chaos. Probabilities between zero and one indicate the presence of parallel universes and alternate outcomes. Fully resolved simulations have probability 1. Probabilities greater than one are result values of completed simulations.</tw-passagedata><tw-passagedata pid="11" name="glossary-utlimate-catalog" tags="" position="100,225" size="100,100">Every system contains theorems that may not be proven within that system.
 
 Every dimension is expressible as a real number 0 to 1 inclusive, as it exists as a measurable quantity.
 
@@ -934,14 +1023,14 @@ The ULTIMATE CATALOG is a system that enumerates all countably infinite possible
 
 Those narratives that may not be indexed by the ULTIMATE CATALOG compose NULLSPACE. Observation of NULLSPACE from a countably infinite dimensional remove reveals
 
-ETERNAL COMPASS ROSE</tw-passagedata><tw-passagedata pid="14" name="glossary-story" tags="" position="475,225" size="100,100">Story is the conversion of simulated NULLSPACE into narrative.
+ETERNAL COMPASS ROSE</tw-passagedata><tw-passagedata pid="12" name="glossary-story" tags="" position="225,225" size="100,100">Story is the conversion of simulated NULLSPACE into narrative.
 NULLSPACE asymptotically approaches zero in countably infinite dimensions.
 The asymptote may only be
-ETERNAL COMPASS ROSE</tw-passagedata><tw-passagedata pid="15" name="glossary-simulation" tags="" position="600,225" size="100,100">Eternal Compass Rose is the index of relationships among sets of simulacra. The system of classification used is provably perfect. 
+ETERNAL COMPASS ROSE</tw-passagedata><tw-passagedata pid="13" name="glossary-simulation" tags="" position="350,225" size="100,100">Eternal Compass Rose is the index of relationships among sets of simulacra. The system of classification used is provably perfect. 
 
 Tasks expand to fill their containers. 
 
-Everything has been organized</tw-passagedata><tw-passagedata pid="16" name="glossary-the-reader" tags="glossary" position="725,225" size="100,100"># The Reader
+Everything has been organized</tw-passagedata><tw-passagedata pid="14" name="glossary-the-reader" tags="glossary" position="475,225" size="100,100"># The Reader
 
 The reader is the narrative processor of a specific narrative. Here are some examples of readers that may be familiar to you.
 
@@ -953,14 +1042,14 @@ Narratives do not require readers.
 
 COUNTERFACTUAL: There is no writer.
 
-{back link}</tw-passagedata><tw-passagedata pid="17" name="glossary-narrative" tags="" position="850,225" size="100,100"></tw-passagedata><tw-passagedata pid="18" name="Life Infocard" tags="" position="975,225" size="100,100">**Subnarrative CID**: Primary LIFE-Bestian-[T~10^51]-&gt;Early Life
+{back link}</tw-passagedata><tw-passagedata pid="15" name="glossary-narrative" tags="" position="600,225" size="100,100"></tw-passagedata><tw-passagedata pid="16" name="Life Infocard" tags="" position="725,225" size="100,100">**Subnarrative CID**: Primary LIFE-Bestian-[T~10^51]-&gt;Early Life
 **Seed**: {life.seed}
 **Narrative Index**: 7aXa_84.b.FFF.a  T: 3.9447 x 10^24 
 **__2ND_PERSON__EDUTAINMENT__**
 
 **Abstract (T({life.seed})-&gt;, Primary LIFE-Bestian)**:
 
-`__**The first life appears as early as physics allows**__ and rapidly becomes more complex; historical document presented as edutainment.`</tw-passagedata><tw-passagedata pid="19" name="Life" tags="" position="1100,225" size="100,100">life.seed: (random.d6 + random.d6 + random.d6 + random.d6 + random.d6 + random.d6) * 6
+`__**The first life appears as early as physics allows**__ and rapidly becomes more complex; historical document presented as edutainment.`</tw-passagedata><tw-passagedata pid="17" name="Life" tags="" position="850,225" size="100,100">life.seed: (random.d6 + random.d6 + random.d6 + random.d6 + random.d6 + random.d6) * 6
 --
 
 {infocard passage: &#39;Life Infocard&#39;}
@@ -978,7 +1067,7 @@ COUNTERFACTUAL: There is no writer.
 
 You are a unicellular form of life.
 
-&gt; [[Metabolize]]</tw-passagedata><tw-passagedata pid="20" name="Metabolize" tags="" position="1225,225" size="100,100">energy: 50
+&gt; [[Metabolize]]</tw-passagedata><tw-passagedata pid="18" name="Metabolize" tags="" position="975,225" size="100,100">energy: 50
 hungry: false
 opponent.distance: random.d10 + random.d10
 molecule.distance: random.d10 + random.d10
@@ -986,7 +1075,7 @@ molecule.distance: random.d10 + random.d10
 
 An increment of time passes in the murk. Your awareness as a single living cell is not finely attuned.
 
-&gt; [[Metabolize-&gt;Metabolize Again]]</tw-passagedata><tw-passagedata pid="21" name="Metabolize Again" tags="" position="100,350" size="100,100">energy: energy - random.d20
+&gt; [[Metabolize-&gt;Metabolize Again]]</tw-passagedata><tw-passagedata pid="19" name="Metabolize Again" tags="" position="1100,225" size="100,100">energy: energy - random.d20
 hungry: energy &lt; 25
 opponent.distance: opponent.distance - 1
 molecule.distance: molecule.distance - 1
@@ -1014,7 +1103,7 @@ There is another cell nearby.
 [if opponent.near]
 &gt; [[Move away from the other cell.]]
 &gt; [[Move towards the other cell.]]
-[continue]</tw-passagedata><tw-passagedata pid="22" name="Start" tags="" position="700,350" size="100,100">{full width, text: &#39;Congratulations&#39;, className: &#39;delicate fade-in&#39;}
+[continue]</tw-passagedata><tw-passagedata pid="20" name="Start" tags="start" position="700,350" size="100,100">{full width, text: &#39;Congratulations&#39;, className: &#39;delicate fade-in&#39;}
 
 {divider insert, className: &#39;fade-in-500&#39;}
 
@@ -1029,38 +1118,96 @@ are due to
 #page article.article {
   text-align: center;
 }
-[continue]</tw-passagedata><tw-passagedata pid="23" name="Start-1" tags="" position="350,350" size="100,100">{full width, text: &#39;YOU&#39;}
+[continue]</tw-passagedata><tw-passagedata pid="21" name="Start-1" tags="start" position="100,350" size="100,100">{full width, text: &#39;YOU&#39;}
 
-have discovered this media fully describing
+have [[discovered **this media** fully-&gt;Start-2]] describing</tw-passagedata><tw-passagedata pid="22" name="Start-2" tags="start" position="225,350" size="100,100">[box rose fade-in-500 xlarge]
 
-[box rose]
 **Eternal**
 **Compass**
 **Rose**
+
 [continue]
 
+[typewriter 50 2 backwards]
 perfectly redacted, paginated, and conceptually codified for your approximate
+[continue]
+[typewriter 500 word]
+perfectly redacted, paginated, and conceptually codified for your approximate
+[continue]
 
-# **ETERNAL COMPASS ROSE**
+[after 5000ms]
+# **ETERNAL COMPASS ROSE** [[coordinates-&gt;Start-3]]
+[cont]</tw-passagedata><tw-passagedata pid="23" name="Start-3" tags="start" position="350,350" size="100,100">[box xlarge]
+coordinates
+[cont]
+in a semi-narrative hypertextual format indubitably known scientifically to be correct and good in all aspects, dimensions, simulations and other narrative structures.
 
-coordinates in a semi-narrative hypertextual format indubitably known scientifically to be correct and good in all aspects, dimensions, simulations and other narrative structures.
+&gt; [[Interactions with ETERNAL COMPASS ROSE begin joyfully.-&gt;Start-4]]</tw-passagedata><tw-passagedata pid="24" name="Start-4" tags="start" position="475,350" size="100,100">## The reader(**{reveal link: &#39;\[S\]&#39;, text: &#39;‽&#39;}**), aka and also including those who engage with this media, aka 
 
-**Interactions with ETERNAL COMPASS ROSE begin joyfully.**
+### the reader, 
 
-Those who engage with this media, aka the reader, are encouraged to annotate and share it by the organizing principles of ETERNAL COMPASS ROSE (ECR). This media is designed to respond and adapt to annotation as well as to movement along ~~e~~ach ~~c~~ommon ~~r~~ule.
+are encouraged to annotate and share it by the organizing principles of ETERNAL COMPASS ROSE (ECR). This media is designed to respond and adapt to annotation as well as to movement along ~~e~~ach ~~c~~ommon ~~r~~ule.
 
-[box]
+[box xlarge left]
 **ETERNAL COMPASS ROSE** presents information about ~~**E**VERY **C**OUNTABLE **R**EALITY~~ to you by the methods of analogy, parable and commentary in a hypertextual format. With this excellent communication recipe you will meet with **success**!
 [continue]
 
-[box warning]
-## WARNING
+### Encountering Carnivorous Rabbits: 
 
+{full width, text: &#39;[[A !!~~WARNING~~!!-&gt;Start-5]]&#39;}
+
+[CSS]
+
+#page article.article&gt;div{
+  display: flex;
+  align-items: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: stretch;
+  justify-content: center;
+}
+
+#page article.article&gt;div&gt;*:nth-child(odd) {
+    width: fit-content;
+    flex: 1 1 0;
+}
+[cont]</tw-passagedata><tw-passagedata pid="25" name="Start-5" tags="start" position="600,350" size="100,100">[box warning vertical]
+## WARNING *WAR*NING WAR*N*ING WARN*ING* !!!
+[cont]
+
+[box warning]
 Partial Understanding is not guaranteed. Full understanding is heretical to the glorious ETERNAL COMPASS ROSE. **Heresy** is punishable by __REDACTION__.
-[continue]
 
 &gt; [[WITNESS THE ETERNAL COMPASS ROSE]]
-&gt; [[DENY THE ETERNAL COMPASS ROSE]]</tw-passagedata><tw-passagedata pid="24" name="test-page" tags="test" position="825,475" size="100,100"># Testing
+[cont]
+&gt; [[DENY THE ETERNAL COMPASS ROSE]]
+
+[CSS]
+
+#page article.article&gt;div{
+  display: flex;
+  align-items: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: stretch;
+  justify-content: center;
+}
+
+#page article.article&gt;div&gt;* {
+    display: unset;
+    margin: 0 1em;
+    flex: 1 1;
+}
+
+#page article.article&gt;div&gt;style {
+  display: none;
+}
+
+#page article.article&gt;div&gt;script {
+  display: none;
+}
+
+[cont]</tw-passagedata><tw-passagedata pid="26" name="test-page" tags="test" position="825,475" size="100,100"># Testing
 
 This is a test page for all of the fancier bits.
 
@@ -1147,15 +1294,34 @@ some fancy stuff here
 
 Visit [[this passage-&gt;Test-Clear-Overview]] to clear the overview.
 
-{back link}</tw-passagedata><tw-passagedata pid="25" name="Test-Insert-Infocard" tags="test" position="600,350" size="100,100">This is a sample.
+{back link}</tw-passagedata><tw-passagedata pid="27" name="Test-Insert-Infocard" tags="test" position="850,350" size="100,100">This is a sample.
 
 **label**: data
-**label**: more data</tw-passagedata><tw-passagedata pid="26" name="Test-Clear-Overview" tags="test" position="725,350" size="100,100">The overview section should be gone now.
+**label**: more data</tw-passagedata><tw-passagedata pid="28" name="Test-Clear-Overview" tags="test" position="975,350" size="100,100">The overview section should be gone now.
 [move clear]
 
 [continue]
 
-{back link}</tw-passagedata><tw-passagedata pid="27" name="WITNESS THE ETERNAL COMPASS ROSE" tags="ecr ui" position="850,350" size="100,100">This is the full ecr ui.</tw-passagedata><tw-passagedata pid="28" name="YOU" tags="" position="975,350" size="100,100">--
+{back link}</tw-passagedata><tw-passagedata pid="29" name="WITNESS THE ETERNAL COMPASS ROSE" tags="ecr ui" position="1100,350" size="100,100">As an **INITIATE** of the mysterious _Eternal Compass Rose_, you have partial access to a single primary CID narrative and several sub-narratives within it. Incredible!
+
+{divider insert}
+
+[box infocard]
+**CID**: PArTy-p00p3R5\
+**Narrative Indices**: 7aXa_84.b.\*.a   
+**Seeds**: RNG(3d6x6)\
+**Resolution Coefficients**: T=(3.2 x 10^-10 s), L=(1.6 \* 10^-35 m), U=(1.2 \* 10^18 u)\
+**Primary Sub-narrative CIDs**: Earf-[\*], CORVETTE-End-times-Bestian-[T&lt;10^51, T&gt;10^200], Bezos-[933], Total-LY-8OS
+[cont]
+
+&gt; [[WHAT IS: a CID?-&gt;glossary-cid]]
+&gt; [[ACCESS SUBNARRATIVE: Earf-[\*]-&gt;Earf]]
+&gt; [[ACCESS SUBNARRATIVE: CORVETTE-End-times-Bestian-[T&lt;10^51, T&gt;10^200]-&gt;Corvette Endtimes]]
+&gt; [[ACCESS SUBNARRATIVE: LIFE-Bestian-[T~10^51]-&gt;Early Life]]
+
+{divider insert}
+
+Learn, be changed!</tw-passagedata><tw-passagedata pid="30" name="YOU" tags="" position="1225,350" size="100,100">--
 
 [if you]
 Hello, {you}.

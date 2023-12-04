@@ -1,30 +1,75 @@
 :: DENY THE ETERNAL COMPASS ROSE
 perspective: 'reader'
 location: 'at the computer'
+reader.canInspectSelf: false || reader.canInspectSelf
 --
 
-You deny the majestic ETERNAL COMPASS ROSE.
+You deny the majestic
 
-There's not much going on, though. 
+{full width, text: 'eternal', className: 'delicate'}
+
+{full width, text: 'COMPASS ROSE', className: 'elaborate'}
+
+There's not much going on, though. You're a very regular person.
+That's what you assume. You have no evidence otherwise.
 
 > [[Look around.->{location} look around]]
-> [[Look inward.->Look at self]]
+> [[Look inward.->look at self]]
+[if reader.canInspectSelf]
+> [[Look **AT** yourself.->describe self]]
+[cont]
 > [[Access the ETERNAL COMPASS ROSE.->Start]]
 
-:: Look at self
+:: look at self
+reader.canInspectSelf: passage.visits>7
+--
 
-Huh.
+You are at the very brink of a personal revelation.
+
+[if passage.visits>5]
+You're getting somewhere.
+
+[if passage.visits>7]
+Did you want a [[description of yourself->describe self]]? Maybe that's what you meant when you indicated, over and over again, that you wanted to look inward. It's a strange way to phrase a request like that, though.
+
+Say what you mean.
+
+[if passage.visits>15]
+You feel that you may be neglecting more important things.
+
+[if passage.visits>25]
+That ECR thing. What was that all about?
+
+[if passage.visits>50]
+> [[Remember something.->Remember]]
+[cont]
+> [[Look inward, further.->look at self]]
+> {previous link}
 
 :: at the computer look around
 present: ['computer']
+_p: 
 --
 The reader is sitting at a computer, on which they have recently encountered ETERNAL COMPASS ROSE.
 
-{embed passage: '_Callouts'}
+The reader is a
 
-:: _Callouts [partial]
+{full width, text: 'YOU'}
 
-{mention things: present }
+{back link}
 
+:: describe self
 
+You don't have a mirror.
 
+{full width, text: 'The End'}
+
+{restart link}
+
+:: Remember
+
+This hasn't been placed, yet.
+
+{full width, text: 'The End'}
+
+{restart link}

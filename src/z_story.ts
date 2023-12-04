@@ -86,4 +86,7 @@ engine.extend('1.0.0', () => {
     })();
 
     console.log('Engine updated.');
+
+    console.log('Setting state defaults.');
+    engine.state.set('reader.canInspectSelf', false);
 });

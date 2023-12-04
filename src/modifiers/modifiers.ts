@@ -14,11 +14,17 @@ globalThis.modules.modifiers = globalThis.modules.modifiers || {};
 globalThis.modules.modifiers.definition = {
     match: /^definition/i,
     process: (output, { invocation }) => {
+        const { wrapMarkdown } = modules.utilities;
         const chunks = invocation.split(/\s+/);
         chunks.shift();
         const term = chunks.join(' ');
 
-        output.text = `<div class="modifier definition"><div class="dt">${term}</div><div class="dd">${output.text}</div></div>`;
+        output.text = `<div class="dt">${term}</div><div class="dd">${output.text}</div>`;
+
+        output.text = wrapMarkdown(output.text, {
+            'data-cb-skippable': '',
+            class: 'modifier definition',
+        });
 
         output.startsNewParagraph = true;
     },
@@ -41,17 +47,17 @@ globalThis.modules.modifiers.box = {
             }
         });
 
-        output.text = `<div class="modifier box ${Object.keys(bits).join(
-            ' '
-        )}">${
-            bits.rose
-                ? "<img src='media/rose.png' alt='LITERALIZED rose as decorative item.'>"
-                : ''
-        }${output.text}</div>`;
+        if (bits.rose) {
+            output.text = `<img src='media/rose.png' alt='LITERALIZED rose as decorative item.'>${output.text}`;
+        }
 
-        console.log('bits', bits);
+        const { wrapMarkdown } = modules.utilities;
+        output.text = wrapMarkdown(output.text, {
+            class: `modifier box ${Object.keys(bits).join(' ')}`,
+            'data-cb-skippable': '',
+        });
 
-        output.startsNewParagraph = false;
+        output.startsNewParagraph = true;
     },
 };
 
@@ -93,25 +99,52 @@ globalThis.modules.modifiers.typewriter = {
     match: /^typewriter\s/i,
     process(output, { invocation }) {
         // Get the time
-        let time = invocation.replace(/^typewriter\s/i, '');
+        let [time, chunkSize = 1, backwards = false] = invocation
+            .replace(/^typewriter\s/i, '')
+            .split(' ');
+
+        if (isNaN(parseInt(chunkSize, 10))) {
+            if (chunkSize === 'backwards') {
+                backwards = true;
+            } else if (chunkSize !== 'word') {
+                chunkSize = 1;
+            }
+        }
 
         // Save original text
         let text = output.text;
 
-        // Get length of original text
-        let length = text.length;
-
         // Wipe out output to start
         output.text = '';
+
+        let chunkedLetters = [];
+
+        if (chunkSize === 'word') {
+            text.split(' ').forEach((t: string) =>
+                chunkedLetters.push([t, ' '])
+            );
+        } else {
+            const letters = text.split('');
+            while (letters.length) {
+                chunkedLetters.push(letters.splice(0, chunkSize));
+            }
+        }
+
+        if (backwards) {
+            chunkedLetters.reverse();
+        }
 
         // Loop through the text
         //  -- Add a new <span> for each character
         //  -- Set the class "fade-in"
         //  -- Set the delay as equal to time multiplied position
-        for (let i = 0; i < length; i++) {
-            output.text += `<span class='fade-in' style='animation-delay: ${
-                time * i
-            }ms'>${text[i]}</span>`;
-        }
+        output.text = chunkedLetters
+            .map(
+                (chunk, i) =>
+                    `<span class='fade-in' style='animation-delay: ${
+                        time * i
+                    }ms'>${chunk?.join('') || chunk}</span>`
+            )
+            .join('');
     },
 };

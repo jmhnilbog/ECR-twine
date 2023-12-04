@@ -7,6 +7,7 @@ interface Inserts {
     fullwidth: Insert;
     divider: Insert;
     mention: Insert;
+    previous: Insert;
 }
 
 globalThis.modules = globalThis.modules || {};
@@ -76,3 +77,33 @@ globalThis.modules.inserts.divider = {
         return result;
     },
 };
+
+globalThis.modules.inserts.previous = (() => {
+    const renderLink = (target: string, label: string) => {
+        // Does the target look like an external link?
+
+        if (/^\w+:\/\/\/?\w/i.test(target)) {
+            return `<a href="${target}">${label || target}</a>`;
+        }
+
+        // We'll treat it as an internal one if not.
+
+        return `<a href="${'javascript:void(0)'}" data-cb-go="${target}">${
+            label || target
+        }</a>`;
+    };
+    return {
+        match: /^previous\s+link/i,
+        render(_, props) {
+            const trail = [...engine.state.get('trail')];
+
+            // find the first passage in the trail different from this passage.
+            trail.reverse();
+            const currentPassage = trail.shift();
+            const previousPassage =
+                trail.find((p) => p !== currentPassage) || trail.pop();
+
+            return renderLink(previousPassage, props.label || 'Back');
+        },
+    };
+})();

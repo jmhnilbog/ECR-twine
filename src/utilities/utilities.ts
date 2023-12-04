@@ -10,10 +10,43 @@ interface Utilities {
     setupDOM: () => void;
     getOverviewElement: () => Element;
     moveToOverview: any;
+    wrapMarkdown: (
+        markdown: string,
+        attributes: { [key: string]: any }
+    ) => string;
 }
 
 globalThis.modules || globalThis.modules || {};
 globalThis.modules.utilities = globalThis.modules.utilities || {};
+
+/**
+ * Sometimes you'd like to wrap a block of Markdown text in a <div> tag to apply
+ * some effect to it... but doing so turns off Markdown paragraphing inside the tag
+ * because Markdown leaves block tags alone. This module wraps each paragraph in
+ * Markdown in a <span> for you.
+ */
+globalThis.modules.utilities.wrapMarkdown = (
+    markdown: string,
+    attributes: { [key: string]: any } = {}
+) => {
+    const tag =
+        '<span' +
+        Object.keys(attributes).reduce(
+            (result, current) =>
+                result + ` ${current}="${attributes[current]}"`,
+            ''
+        ) +
+        '>';
+
+    let output =
+        tag + markdown.replace(/[\r\n]{2,}/g, `</span>$&${tag}`) + '</span>';
+
+    /* Move <span>s after any setext-style headers. */
+
+    output = output.replace(/(<span.*?>)\s*(#+)/gi, '$2 $1');
+    return output;
+};
+
 globalThis.modules.utilities.toSafeClassName = (s: string): string => {
     const unsafe = s.toString();
     const safe = encodeURIComponent(unsafe)

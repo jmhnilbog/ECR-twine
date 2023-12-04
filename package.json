@@ -9,7 +9,8 @@
     "clean-artifacts": "rm -rf artifacts/js",
     "clean-build": "rm build/index.*",
     "clean": "npm run clean-artifacts && npm run clean-build",
-    "build-twee": "tweego -d -l src artifacts -o build/index.twee"
+    "build-twee": "tweego -d -l src artifacts -o build/index.twee",
+    "zip": "zip -r pkg.zip build"
   },
   "author": "John Mark Hawley",
   "devDependencies": {

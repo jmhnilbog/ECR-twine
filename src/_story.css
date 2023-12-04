@@ -68,3 +68,11 @@
     background-color: hsla(0, 100%, 98.03921568627452%, 1);
     color: hsla(0, 73.83966244725738%, 53.529411764705884%, 1);
 }
+
+.vertical {
+    writing-mode: vertical-lr;
+}
+
+#page section.main {
+    margin-bottom: 3em;
+}
