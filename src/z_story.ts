@@ -1,17 +1,18 @@
 engine.extend('1.0.0', () => {
     console.log('Extending engine.');
 
-    console.log('Adding Inserts:', Object.keys(modules.inserts));
-    config.template.inserts = [
-        ...Object.values(modules.inserts),
-        ...config.template.inserts,
-    ];
-    console.log('Adding Modifiers:', Object.keys(modules.modifiers));
-    config.template.modifiers = [
-        ...Object.values(modules.modifiers),
-        ...config.template.modifiers,
-    ];
-    console.log('Inserts & Modifiers added.', config.template);
+    // console.log(config.template);
+    // console.log('Adding Inserts:', Object.keys(modules.inserts));
+    // config.template.inserts = [
+    //     ...Object.values(modules.inserts),
+    //     ...config.template.inserts,
+    // ];
+    // console.log('Adding Modifiers:', Object.keys(modules.modifiers));
+    // config.template.modifiers = [
+    //     ...Object.values(modules.modifiers),
+    //     ...config.template.modifiers,
+    // ];
+    // console.log('Inserts & Modifiers added.', config.template);
 
     // Testing mode?
     config.testing = false;
@@ -88,5 +89,5 @@ engine.extend('1.0.0', () => {
     console.log('Engine updated.');
 
     console.log('Setting state defaults.');
-    engine.state.set('reader.canInspectSelf', false);
+    modules.state.setDefaults(engine.state);
 });

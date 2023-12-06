@@ -1,20 +1,29 @@
-:: Glossary
+:: glossary [page glossary]
 
-# Glossary
 
-<details>
-<summary>CID</summary>
-{embed passage: 'glossary-cid'}
-</details>
+**WELCOME** to the ECR
+{full width, text: 'Glossary'}
 
-<details>
-<summary>Narrative</summary>
-{embed passage: 'glossary-narrative'}
-</details>
+# ! ! !
 
-:: glossary-cid
+[JavaScript]
+// get all passages tagged [glossary] without [page]
+// sort alphabetically by name
+// provide a link to each
 
-# CID
+const passages = engine.story.passages();
+const glossaryPassages = passages.filter((p) => p.tags.includes('glossary') && ! p.tags.includes('page'))
+glossaryPassages.sort((a, b) => a.name <= b.name ? -1 : 1).forEach((p) => {
+  const label = p.name.toUpperCase().replace(/^GLOSSARY-/, '');
+  write(`<p><h2><a href="javascript:void(0)" data-cb-go="${p.name}">${label}</a></h2></p>`);
+})
+[cont]
+
+{back link}
+
+:: glossary-cid [glossary term]
+
+#.CID CID
 
 A **CID** is a unique reference to a set of [[narratives->glossary-narrative]] identified and codified within the [[Eternal Compass Rose->glossary-eternal-compass-rose]]. It describes the types of narratives within the set and supplies friendly nicknames for those most referenced, which the reader is sure to find delightful.
 
@@ -35,7 +44,7 @@ Let us examime the structure of the CID in which [[the reader->glossary-the-read
 
 {back link}
 
-:: glossary-ecr [glossary]
+:: glossary-ecr [glossary term]
 
 # ETERNAL COMPASS ROSE
 
@@ -49,11 +58,11 @@ Those narratives that may not be indexed by the ULTIMATE CATALOG compose NULLSPA
 
 ETERNAL COMPASS ROSE
 
-:: glossary-religion
+:: glossary-religion [glossary term]
 
 bible as post apocalyptic literature, each book by different author/conflicting story as different author, use apocrypha as well. Genesis in reverse? Void actually spectrum, unnamed, naming causes disruption. Separation of waters destroys peace, manifestation of consciousness.
 
-:: glossary-eternal-compass-rose
+:: glossary-eternal-compass-rose [glossary term]
 
 Narrative may be described using a small number of dimensions. These make up the eternal compass rose: spatial x-y-z, a simulation identifier, probability notation, metaphysical level, and time.
 
@@ -64,7 +73,7 @@ Metaphysical level indicates the positive or negative perfection of the universe
 Probabilities of zero or less are controlled by Chaos. Probabilities between zero and one indicate the presence of parallel universes and alternate outcomes. Fully resolved simulations have probability 1. Probabilities greater than one are result values of completed simulations.
 
 
-:: glossary-utlimate-catalog
+:: glossary-utlimate-catalog [glossary term]
 
 Every system contains theorems that may not be proven within that system.
 
@@ -76,14 +85,14 @@ Those narratives that may not be indexed by the ULTIMATE CATALOG compose NULLSPA
 
 ETERNAL COMPASS ROSE
 
-:: glossary-story
+:: glossary-story [glossary term]
 
 Story is the conversion of simulated NULLSPACE into narrative.
 NULLSPACE asymptotically approaches zero in countably infinite dimensions.
 The asymptote may only be
 ETERNAL COMPASS ROSE
 
-:: glossary-simulation
+:: glossary-simulation [glossary term]
 
 Eternal Compass Rose is the index of relationships among sets of simulacra. The system of classification used is provably perfect. 
 
@@ -91,7 +100,7 @@ Tasks expand to fill their containers.
 
 Everything has been organized
 
-:: glossary-the-reader [glossary]
+:: glossary-the-reader [glossary term]
 
 # The Reader
 
@@ -107,4 +116,4 @@ COUNTERFACTUAL: There is no writer.
 
 {back link}
 
-:: glossary-narrative
+:: glossary-narrative [glossary term]

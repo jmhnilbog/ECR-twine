@@ -1,0 +1,90 @@
+interface Modules {
+    data: Data;
+}
+
+interface Data {
+    Thing: typeof Thing.constructor;
+}
+
+globalThis.modules || globalThis.modules || {};
+globalThis.modules.data = globalThis.modules.data || {};
+
+interface ThingData {
+    name?: string;
+    description?: string;
+    mass?: number; // in grams;
+    bulk?: number; // in handfuls;
+    weapon?: number; // in relative threat units (0 is harmless, 2 is a brass knuckle, 4 is a sword, 10 is a gun)
+}
+
+class Inventory {
+    maxMass: number = Number.MAX_VALUE;
+    maxBulk: number = Number.MAX_VALUE;
+    items: Thing[] = [];
+    canAcceptMass(grams: number) {
+        return this.maxMass >= this.mass + grams;
+    }
+    canAcceptBulk(handfuls: number) {
+        return this.maxBulk >= this.bulk + handfuls;
+    }
+    canAccept(thing: Thing) {
+        return this.canAcceptMass(thing.mass) && this.canAcceptBulk(thing.bulk);
+    }
+    add(thing: Thing) {
+        this.items.push(thing);
+    }
+    remove(name: string): Thing | undefined {
+        const index = this.items.findIndex((i) => i.name === name);
+        if (index !== -1) {
+            return this.items.splice(index, 1)[0];
+        }
+        return undefined;
+    }
+    get mass() {
+        return this.items
+            .map((i) => i.mass)
+            .reduce((prev, curr) => prev + curr);
+    }
+    get bulk() {
+        return this.items
+            .map((i) => i.bulk)
+            .reduce((prev, curr) => prev + curr);
+    }
+}
+
+class Thing implements ThingData {
+    description: string = 'No description.';
+    name: string = 'No name.';
+    mass: number = 0; // in grams
+    bulk: number = 0; // in handfuls
+    weapon: number = 0; // in relative threat units (0 is harmless, 2 is a brass knuckle, 4 is a sword, 10 is a gun)
+
+    constructor(initializer: ThingData) {
+        Object.assign(this, initializer);
+    }
+
+    copy() {
+        return new Thing(this);
+    }
+
+    toString() {
+        let s = this.description;
+        if (this.mass) {
+            s += ` It has a mass of ${this.mass} grams.`;
+        }
+        if (this.bulk < 0 && this.bulk > 1) {
+            s += ` It fits comfortably in a human hand.`;
+        } else if (this.bulk === 1) {
+            s += ` It fits in a human hand.`;
+        } else if (this.bulk > 1 && this.bulk < 2) {
+            s += ` It requires two human hands to carry it comfortably.`;
+        } else if (this.bulk === 2) {
+            s += ` It requires two human hands to carry.`;
+        } else {
+            s += ` It is difficult for a human to carry, even with two hands.`;
+        }
+        return this.description;
+    }
+}
+
+globalThis.modules.data.Thing = Thing;

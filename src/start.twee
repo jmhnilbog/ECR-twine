@@ -21,6 +21,10 @@ ETERNAL COMPASS ROSE
 
 {divider insert, className: 'fade-in-500'}
 
+[move selector=header.left]
+in the header left
+[cont]
+
 [after 500ms]
 are due to 
 

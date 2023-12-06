@@ -38,7 +38,7 @@ Say what you mean.
 You feel that you may be neglecting more important things.
 
 [if passage.visits>25]
-That ECR thing. What was that all about?
+That ECR thing. What was that all about? 
 
 [if passage.visits>50]
 > [[Remember something.->Remember]]

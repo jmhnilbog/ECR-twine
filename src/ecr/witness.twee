@@ -1,6 +1,15 @@
 :: WITNESS THE ETERNAL COMPASS ROSE [ecr ui]
+reader.canAccessGlossary: true
+--
+
 
 As an **INITIATE** of the mysterious _Eternal Compass Rose_, you have partial access to a single primary CID narrative and several sub-narratives within it. Incredible!
+
+As an **INITIATE** of the mysterious _Eternal Compass Rose_, you have partial access to
+
+{full width, text: 'the glossary'}
+
+above, in all contexts!
 
 {divider insert}
 
@@ -15,7 +24,7 @@ As an **INITIATE** of the mysterious _Eternal Compass Rose_, you have partial ac
 > [[WHAT IS: a CID?->glossary-cid]]
 > [[ACCESS SUBNARRATIVE: Earf-[\*]->Earf]]
 > [[ACCESS SUBNARRATIVE: CORVETTE-End-times-Bestian-[T<10^51, T>10^200]->Corvette Endtimes]]
-> [[ACCESS SUBNARRATIVE: LIFE-Bestian-[T~10^51]->Early Life]]
+> [[ACCESS SUBNARRATIVE: LIFE-Bestian-[T~10^51]->Life]]
 
 {divider insert}
 
