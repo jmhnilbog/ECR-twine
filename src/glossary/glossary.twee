@@ -1,35 +1,25 @@
 :: glossary [page glossary]
 
-
 **WELCOME** to the ECR
 {full width, text: 'Glossary'}
 
 # ! ! !
 
-[JavaScript]
-// get all passages tagged [glossary] without [page]
-// sort alphabetically by name
-// provide a link to each
+<%= window.setup.buildGlossary() %>
 
-const passages = engine.story.passages();
-const glossaryPassages = passages.filter((p) => p.tags.includes('glossary') && ! p.tags.includes('page'))
-glossaryPassages.sort((a, b) => a.name <= b.name ? -1 : 1).forEach((p) => {
-  const label = p.name.toUpperCase().replace(/^GLOSSARY-/, '');
-  write(`<p><h2><a href="javascript:void(0)" data-cb-go="${p.name}">${label}</a></h2></p>`);
-})
-[cont]
-
-{back link}
+<%= window.setup.backlink() %>
 
 :: glossary-cid [glossary term]
 
-#.CID CID
+# CID
 
 A **CID** is a unique reference to a set of [[narratives->glossary-narrative]] identified and codified within the [[Eternal Compass Rose->glossary-eternal-compass-rose]]. It describes the types of narratives within the set and supplies friendly nicknames for those most referenced, which the reader is sure to find delightful.
 
 CIDs are assigned to narrative sets as they are discovered and codified by the _ECR_. **HERETICAL**
 
 Let us examime the structure of the CID in which [[the reader->glossary-the-reader]] exists. Take note! The CID has been truncated and abridged to best exist within the current narrative. The true glories of the CID (and the *E* *C* *R*)
+
+<div.infocard>
 
 **CID**: PArTy-p00p3R5\
 **Narrative Indices**: 7aXa_84.b.\*.a   
@@ -40,9 +30,9 @@ Let us examime the structure of the CID in which [[the reader->glossary-the-read
   U=(1.2 \* 10^18 u)\
 **Primary Sub-narrative CIDs**: Earf-[\*], CORVETTE-End-times-Bestian-[T<10^51, T>10^200], Bezos-[933], Total-LY-8OS
 
+</div>
 
-
-{back link}
+<%= window.setup.backlink() %>
 
 :: glossary-ecr [glossary term]
 
@@ -52,17 +42,29 @@ Every system contains theorems that may not be proven within that system.
 
 Every dimension is expressible as a real number 0 to 1 inclusive, as it exists as a measurable quantity.
 
-The ULTIMATE CATALOG is a system that enumerates all countably infinite possible narratives.
+The [[ULTIMATE CATALOG->glossary-ultimate catalog]] is a system that enumerates all countably infinite possible narratives.
 
-Those narratives that may not be indexed by the ULTIMATE CATALOG compose NULLSPACE. Observation of NULLSPACE from a countably infinite dimensional remove reveals
+Those narratives that may not be indexed by the ULTIMATE CATALOG compose [[NULLSPACE->glossary-nullspace]]. Observation of NULLSPACE from a countably infinite dimensional remove reveals
 
-ETERNAL COMPASS ROSE
+# ETERNAL COMPASS ROSE
+
+<%= window.setup.backlink() %>
 
 :: glossary-religion [glossary term]
 
-bible as post apocalyptic literature, each book by different author/conflicting story as different author, use apocrypha as well. Genesis in reverse? Void actually spectrum, unnamed, naming causes disruption. Separation of waters destroys peace, manifestation of consciousness.
+# Religion 
+
+## CONCEPT SUPPLANTED BY ///REDACTION///
+
+An aside: Consider /[/[YOUR/]/] bible as post apocalyptic literature, each book by different author/conflicting story as different author, use apocrypha as well. Genesis in reverse? Void actually spectrum, unnamed, naming causes disruption. Separation of waters destroys peace, manifestation of consciousness.
+
+<%= window.setup.backlink() %>
 
 :: glossary-eternal-compass-rose [glossary term]
+
+# ETERNAL COMPASS ROSE
+
+## ///SIMPLIFIED
 
 Narrative may be described using a small number of dimensions. These make up the eternal compass rose: spatial x-y-z, a simulation identifier, probability notation, metaphysical level, and time.
 
@@ -72,8 +74,11 @@ Metaphysical level indicates the positive or negative perfection of the universe
 
 Probabilities of zero or less are controlled by Chaos. Probabilities between zero and one indicate the presence of parallel universes and alternate outcomes. Fully resolved simulations have probability 1. Probabilities greater than one are result values of completed simulations.
 
+<%= window.setup.backlink() %>
 
 :: glossary-utlimate-catalog [glossary term]
+
+# Ultimate Catalog
 
 Every system contains theorems that may not be proven within that system.
 
@@ -85,20 +90,30 @@ Those narratives that may not be indexed by the ULTIMATE CATALOG compose NULLSPA
 
 ETERNAL COMPASS ROSE
 
+<%= window.setup.backlink() %>
+
 :: glossary-story [glossary term]
+
+# Story
 
 Story is the conversion of simulated NULLSPACE into narrative.
 NULLSPACE asymptotically approaches zero in countably infinite dimensions.
 The asymptote may only be
 ETERNAL COMPASS ROSE
 
+<%= window.setup.backlink() %>
+
 :: glossary-simulation [glossary term]
+
+# Simulation
 
 Eternal Compass Rose is the index of relationships among sets of simulacra. The system of classification used is provably perfect. 
 
 Tasks expand to fill their containers. 
 
 Everything has been organized
+
+<%= window.setup.backlink() %>
 
 :: glossary-the-reader [glossary term]
 
@@ -114,6 +129,48 @@ Narratives do not require readers.
 
 COUNTERFACTUAL: There is no writer.
 
-{back link}
+<%= window.setup.backlink() %>
 
 :: glossary-narrative [glossary term]
+
+# Narrative
+
+## (traditional)
+
+a spoken or written account of connected events; a story.
+
+## (as propellant)
+
+see [[Narrative Engine->glossary-narrative engine]]
+
+a spoken or written account of connected events; a story.
+
+<%= window.setup.backlink() %>
+
+:: glossary-narrative engine [glossary term]
+
+# Narrative Engine
+
+The Narrative Engine is the ultimate FTA device. It is an invention of the [[Ultimate Galatic Empire->glossary-bestian]].
+
+:: glossary-bestian [glossary term]
+
+# Bestian
+
+<%= window.setup.backlink() %>
+
+:: glossary-earth [glossary term]
+
+# Earth
+
+A planet. A close analog of [[Earf->glossary-earf]]. The last life in the ECR is located here.
+
+<%= window.setup.backlink() %>
+
+:: glossary-earf [glossary term]
+
+# Earf
+
+A planet. A close analog of [[Earth->glossary-earth]].
+
+<%= window.setup.backlink() %>

@@ -6,9 +6,9 @@ interface Data {
     things: Thing[];
 }
 
-globalThis.modules || globalThis.modules || {};
-globalThis.modules.data = globalThis.modules.data || {};
-globalThis.modules.data.things = globalThis.modules.data.things || [];
+window.setup || window.setup || {};
+window.setup.data = window.setup.data || {};
+window.setup.data.things = window.setup.data.things || [];
 
 () => {
     const d: ThingData[] = [
@@ -26,7 +26,7 @@ globalThis.modules.data.things = globalThis.modules.data.things || [];
             weapon: 4,
         },
     ];
-    modules.data.things = d.map((t) => new Thing(t));
+    window.setup.data.things = d.map((t) => new Thing(t));
 
     console.log('Things initialized.');
 };

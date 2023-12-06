@@ -1,50 +1,71 @@
 :: DENY THE ETERNAL COMPASS ROSE
-perspective: 'reader'
-location: 'at the computer'
-reader.canInspectSelf: false || reader.canInspectSelf
---
+
+<% 
+    story.state.protagonist = story.state.reader;
+    story.state.reader.location = 'at the computer';
+    story.state.reader.canInspectSelf = true;
+
+    var location = story.state.protagonist.location;
+%>
 
 You deny the majestic
 
-{full width, text: 'eternal', className: 'delicate'}
+<div.fullwidth.delicate>
 
-{full width, text: 'COMPASS ROSE', className: 'elaborate'}
+eternal
+
+</div>
+<div.fullwidth>
+
+COMPASS ROSE
+
+</div>
 
 There's not much going on, though. You're a very regular person.
 That's what you assume. You have no evidence otherwise.
 
-> [[Look around.->{location} look around]]
+> [[Look around.-><%= story.state.protagonist.location %> look around]]
 > [[Look inward.->look at self]]
-[if reader.canInspectSelf]
+
+<% if (story.state.reader.canInspectSelf) { %>
 > [[Look **AT** yourself.->describe self]]
-[cont]
+<% } %>
+
 > [[Access the ETERNAL COMPASS ROSE.->Start]]
 
 :: look at self
-reader.canInspectSelf: passage.visits>7
---
+
+<%
+    story.state.reader.canInspectSelf = visited(passage.name) > 7
+%>
+
 
 You are at the very brink of a personal revelation.
 
-[if passage.visits>5]
+<% if (visited(passage.name) > 5) { %>
 You're getting somewhere.
+<% } %>
 
-[if passage.visits>7]
+<% if (visited(passage.name) > 7) { %>
 Did you want a [[description of yourself->describe self]]? Maybe that's what you meant when you indicated, over and over again, that you wanted to look inward. It's a strange way to phrase a request like that, though.
 
 Say what you mean.
+<% } %>
 
-[if passage.visits>15]
+<% if (visited(passage.name) > 15) { %>
 You feel that you may be neglecting more important things.
+<% } %>
 
-[if passage.visits>25]
+<% if (visited(passage.name) > 25) { %>
 That ECR thing. What was that all about? 
+<% } %>
 
-[if passage.visits>50]
+<% if (visited(passage.name) > 50) { %>
 > [[Remember something.->Remember]]
-[cont]
+<% } %>
+
 > [[Look inward, further.->look at self]]
-> {previous link}
+> <%= window.setup.previouslink('Stop.') %>
 
 :: at the computer look around
 present: ['computer']

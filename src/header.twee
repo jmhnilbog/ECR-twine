@@ -1,0 +1,5 @@
+:: Header
+
+<% if(window.story?.state?.reader?.canAccessGlossary && !passage.tags.includes('glossary')){ %>
+    [[glossary]]
+<% } %>

@@ -5,8 +5,8 @@ ETERNAL COMPASS ROSE
 :: StoryData
 {
   "ifid": "992209DC-A153-48BF-9F4F-B281A1FCFAC8",
-  "format": "Chapbook",
-  "format-version": "1.2.3",
+  "format": "Snowman",
+  "format-version": "2.0.3",
   "start": "Start",
   "tag-colors": {
      "start": "green",
@@ -17,133 +17,109 @@ ETERNAL COMPASS ROSE
 
 :: Start [start] {"position":"700,350","size":"100,100"}
 
-{full width, text: 'Congratulations', className: 'delicate fade-in'}
+<div.centered>
 
-{divider insert, className: 'fade-in-500'}
+<div.fullwidth.delicate.fade-in>
 
-[move selector=header.left]
-in the header left
-[cont]
+# Congratulations
 
-[after 500ms]
+</div>
+
+<hr />
+
 are due to 
 
-{full width, text: 'YOU', className: 'elaborate fade-in-1500'}
+<div.fullwidth.elaborate>you</div>
 
-<div class="xlarge fade-in-2000">[[because->Start-1]]</div>
 
-[CSS]
-#page article.article {
-  text-align: center;
-}
-[continue]
+[[because->Start-1]]
+
+
 
 :: Start-1 [start]
 
-{full width, text: 'YOU'}
+<div.centered>
+
+
+<h1 class="fullwidth elaborate fade-in">YOU</h1>
+
 
 have [[discovered **this media** fully->Start-2]] describing
 
 :: Start-2 [start]
 
-[box rose fade-in-500 xlarge]
+<div.box.rose>
 
 **Eternal**
 **Compass**
 **Rose**
 
-[continue]
+</div>
 
-[typewriter 50 2 backwards]
-perfectly redacted, paginated, and conceptually codified for your approximate
-[continue]
-[typewriter 500 word]
-perfectly redacted, paginated, and conceptually codified for your approximate
-[continue]
+<div.typewriter.backwards>
 
-[after 5000ms]
+perfectly redacted, paginated, and conceptually codified for your approximate
+
+</div>
+<div.typewriter.byWord>
+
+perfectly redacted, paginated, and conceptually codified for your approximate
+
+</div>
+
+<div.after.t500ms>
+
 # **ETERNAL COMPASS ROSE** [[coordinates->Start-3]]
-[cont]
+
+</div>
+</div>
 
 :: Start-3 [start]
-[box xlarge]
+
+<div.box>
+
 coordinates
-[cont]
+
+</div>
 in a semi-narrative hypertextual format indubitably known scientifically to be correct and good in all aspects, dimensions, simulations and other narrative structures.
 
-> [[Interactions with ETERNAL COMPASS ROSE begin joyfully.->Start-4]]
+[[Interactions with ETERNAL COMPASS ROSE begin joyfully.->Start-4]]
 
 
 :: Start-4 [start]
 
-## The reader(**{reveal link: '\[S\]', text: '‽'}**), aka and also including those who engage with this media, aka 
+<% $('.passage').addClass('.jumble') %>
+
+## The reader(‽), aka and also including those who engage with this media, aka 
 
 ### the reader, 
 
-are encouraged to annotate and share it by the organizing principles of ETERNAL COMPASS ROSE (ECR). This media is designed to respond and adapt to annotation as well as to movement along ~~e~~ach ~~c~~ommon ~~r~~ule.
+are encouraged to annotate and share it by the organizing principles of ETERNAL COMPASS ROSE (ECR). This media is designed to respond and adapt to annotation as well as to movement along **Each Common Rule**.
 
-[box xlarge left]
-**ETERNAL COMPASS ROSE** presents information about ~~**E**VERY **C**OUNTABLE **R**EALITY~~ to you by the methods of analogy, parable and commentary in a hypertextual format. With this excellent communication recipe you will meet with **success**!
-[continue]
+<div.xlarge.box>
+
+**ETERNAL COMPASS ROSE** presents information about **E**VERY **C**OUNTABLE **R**EALITY to you by the methods of analogy, parable and commentary in a hypertextual format. With this excellent communication recipe you will meet with **success**!
+
+</div>
 
 ### Encountering Carnivorous Rabbits: 
 
-{full width, text: '[[A !!~~WARNING~~!!->Start-5]]'}
-
-[CSS]
-
-#page article.article>div{
-  display: flex;
-  align-items: flex-start;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-content: stretch;
-  justify-content: center;
-}
-
-#page article.article>div>*:nth-child(odd) {
-    width: fit-content;
-    flex: 1 1 0;
-}
-[cont]
+<div.fullwidth>
+[[A !!~~WARNING~~!!->Start-5]]
+</div>
 
 
 :: Start-5 [start]
 
-[box warning vertical]
+<div.box.warning.vertical>
 ## WARNING *WAR*NING WAR*N*ING WARN*ING* !!!
-[cont]
+</div>
 
-[box warning]
+<div.box.warning>
 Partial Understanding is not guaranteed. Full understanding is heretical to the glorious ETERNAL COMPASS ROSE. **Heresy** is punishable by __REDACTION__.
 
-> [[WITNESS THE ETERNAL COMPASS ROSE]]
-[cont]
-> [[DENY THE ETERNAL COMPASS ROSE]]
 
-[CSS]
+- [[WITNESS THE ETERNAL COMPASS ROSE]]
+</div>
 
-#page article.article>div{
-  display: flex;
-  align-items: flex-start;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-content: stretch;
-  justify-content: center;
-}
-
-#page article.article>div>* {
-    display: unset;
-    margin: 0 1em;
-    flex: 1 1;
-}
-
-#page article.article>div>style {
-  display: none;
-}
-
-#page article.article>div>script {
-  display: none;
-}
-
-[cont]
+- [[DENY THE ETERNAL COMPASS ROSE]]

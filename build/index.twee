@@ -75,7 +75,6 @@ The reader is sitting at a computer, on which they have recently encountered ETE
 
 
 :: ECR-UI [ecr ui]
-config.header.right: '[[Glossary]]'
 --
 
 { embed passage: 'Themes-ecr-ui-values'}

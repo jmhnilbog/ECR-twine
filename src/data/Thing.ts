@@ -6,8 +6,8 @@ interface Data {
     Thing: typeof Thing.constructor;
 }
 
-globalThis.modules || globalThis.modules || {};
-globalThis.modules.data = globalThis.modules.data || {};
+window.setup = window.setup || {};
+window.setup.data = window.setup.data || {};
 
 interface ThingData {
     name?: string;
@@ -87,4 +87,4 @@ class Thing implements ThingData {
     }
 }
 
-globalThis.modules.data.Thing = Thing;
+window.setup.data.Thing = Thing;

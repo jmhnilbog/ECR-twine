@@ -1,0 +1,16 @@
+:: Sidebar-A [sidebar]
+
+<% if (window.story?.state?.protagonist) { %>
+
+<div.protagonist>
+<span.label>PROTAG: </span><%= window.story.state.protagonist.toString() %>
+</div>
+
+<% } %>
+:: Sidebar-B [sidebar]
+
+<% if (false) { %>
+
+/PROTAG: reader/
+
+<% } %>
