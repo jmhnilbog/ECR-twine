@@ -1,9 +1,9 @@
 :: Sidebar-A [sidebar]
 
-<% if (window.story?.state?.protagonist) { %>
+<% if (story?.state?.protagonist) { %>
 
 <div.protagonist>
-<span.label>PROTAG: </span><%= window.story.state.protagonist.toString() %>
+<span.label>PROTAG: </span><%= story.state.protagonist.toString() %>
 </div>
 
 <% } %>

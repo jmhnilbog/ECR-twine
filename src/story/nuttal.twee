@@ -1,0 +1,83 @@
+:: nuttal-Start
+
+<%= 
+setup.infocard({
+    'CID': 'PArTy-p00p3R5',
+    'Subnarrative CID': 'Earf-\[\T~7 x 10^53\]',
+    'Seed': story.state.earf.seed,
+    'Narrative Index': '7aXa_84.b.FFF.b',
+    '__2ND_PERSON_EDUTAINMENT__': 'true',
+    '__AS': '_PEASANT( NUTTAL )_', 
+}, 'A pseudo-medieval peasant encounters an aspect of {{SPOILER_TAGS}}; historical document presented as edutainment.')
+%>
+
+<% 
+    story.state.story = story.state.earf;
+%>
+
+# Welcome to Earf
+
+You are a slovenly inhabitant of the backwater village of Elfward, somewhere on the planet Earf. Your name is Nuttal. Tax and religious documentation that you will never be able to read refers to you as either 'Nuttal of Elfward' or 'Nuttal Dunggatherer'.
+
+Your life is an uninterrupted cycle of sleep, dung collection, and scrounging for food. Your fingernails are caked with fecal matter, and your belly is full of porrige and squirrel meat. 
+
+The sun is setting. Elfward is quiet.
+
+> [[Go home and sleep->nuttal-go home]]
+
+:: nuttal-go home
+
+<% story.state.story.time += 10 %>
+
+Your little shack is close to the center of the village, and you make it home as the sun sets. You're out of candles, so you lie on your pallet to spend some time picking at lice in the dark.
+
+Gnaw, a friendly village dog, nudges open the door and climbs on your bed. His warmth helps you fall asleep.
+
+> [[Sleep.->nuttal-sleep at home]]
+
+:: nuttal-sleep at home
+
+<% story.state.story.time += 2400 %>
+
+Your dreams are more than the usual rehashing of the day's events, but less than interesting. You wake up to moonlight filtered through gaps in your home's roof and spilling in through the open door.
+
+Gnaw trots out the door, leaving you chilly.
+
+> [[Follow Gnaw.->nuttal-follow gnaw]]
+
+:: nuttal-follow gnaw
+
+<% story.state.story.time += 5 %>
+
+You get out of bed to see what the dog is up to.
+
+> [[Leave your home.->nuttal-elfward square night]]
+
+:: nuttal-elfward square night
+
+# Elfward Village Square
+
+While dim, the moon offers enough light to show you the empty village square. Gnaw sniffs the air a few feet in front of you, looking confused. The dog looks back at you and sniffs again. A tremble runs from the dog's paws to its face, and it runs off across the square and out of sight.
+
+Stupid dog.
+
+<% story.state.story.time += 2 %>
+
+> [[Go back to bed.->nuttal-more sleep at home]]
+
+:: nuttal-more sleep at home
+
+You return to the shack and close the door.
+
+Without your canine blanket to give you warmth and share parasites, it takes a little longer to get back to sleep, but you manage just fine.
+
+> [[Sleep through the night.->nuttal-wake up morning]]
+
+:: nuttal-wake up morning
+
+<% story.state.story.time += 2400 %>
+
+The absence of moonlight wakes you before the dawn can. The early bird catches the worm, after all, and there is a fresh new crop of dung to collect. You spring out of bed.
+
+
+

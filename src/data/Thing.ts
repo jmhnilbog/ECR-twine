@@ -4,6 +4,7 @@ interface Modules {
 
 interface Data {
     Thing: typeof Thing.constructor;
+    Character: typeof Character.constructor;
 }
 
 window.setup = window.setup || {};
@@ -11,6 +12,7 @@ window.setup.data = window.setup.data || {};
 
 interface ThingData {
     name?: string;
+    location?: string;
     description?: string;
     mass?: number; // in grams;
     bulk?: number; // in handfuls;
@@ -55,8 +57,9 @@ class Inventory {
 class Thing implements ThingData {
     description: string = 'No description.';
     name: string = 'No name.';
-    mass: number = 0; // in grams
-    bulk: number = 0; // in handfuls
+    location: string;
+    _mass: number = 0; // in grams
+    _bulk: number = 0; // in handfuls
     weapon: number = 0; // in relative threat units (0 is harmless, 2 is a brass knuckle, 4 is a sword, 10 is a gun)
 
     constructor(initializer: ThingData) {
@@ -65,6 +68,19 @@ class Thing implements ThingData {
 
     copy() {
         return new Thing(this);
+    }
+
+    get mass() {
+        return this._mass;
+    }
+    set mass(m) {
+        this._mass = m;
+    }
+    get bulk() {
+        return this._bulk;
+    }
+    set bulk(b) {
+        this._bulk = b;
     }
 
     toString() {
@@ -87,4 +103,19 @@ class Thing implements ThingData {
     }
 }
 
+class Character extends Thing {
+    inventory = new Inventory();
+    name: string;
+
+    constructor(obj: ThingData) {
+        super(obj);
+    }
+
+    toString() {
+        let s = super.toString();
+        return s;
+    }
+}
+
+window.setup.data.Character = Character;
 window.setup.data.Thing = Thing;

@@ -26,19 +26,60 @@ $(window).on('sm.story.started', () => {
         renderToSelector('#footer', 'Footer');
     });
 
-    // set default state.
-    story.state.reader = {};
-    story.state.reader.canAccessGlossary = false;
-    story.state.reader.canInspectSelf = false;
-    story.state.reader.location = undefined;
-    story.state.protagonist = false;
-    story.state.animacule = {};
-    story.state.life = {};
-    story.state.life.seed = setup.d6(6);
+    // location state
+    const elfward = {};
+
+    const home = {};
+
+    const locations = {
+        elfward,
+        home,
+    };
+
+    // character state
+    const reader = {
+        canAccessGlossary: false,
+        canInspectSelf: false,
+        location: undefined,
+        inventory: new Inventory(),
+    };
+
+    const nuttal = setup.data.characters.Nuttal;
+
+    const characters = {
+        reader,
+        nuttal,
+    };
+
+    // sub-story state
+    const prime = {
+        seed: 0,
+        time: 0,
+    };
+
+    const life = {
+        seed: setup.d6(6),
+        time: 0,
+    };
+
+    const earf = {
+        seed: setup.d6(6),
+        time: 0,
+    };
+
+    story.state = {
+        characters,
+        locations,
+        reader,
+        protagonist: nuttal,
+        story: prime,
+        life,
+        earf,
+    };
 
     // scroll to the top each passage
     $().on('sm.passage.shown', function () {
-        window.scrollTo(0, 0);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 });
 
@@ -54,6 +95,8 @@ interface Modules {
     previouslink: (label?: string) => string;
     restartLink: (label?: string) => string;
     d6: (num: number) => number;
+    _fieldsToList: (data?: Field) => string;
+    infocard: (data: Field, abstract?: string) => string;
 }
 
 window.setup = window.setup || {};
@@ -161,3 +204,44 @@ $(window).on('sm.passage.shown', (_e, _data) => {
         fitty('.fullwidth');
     }
 });
+
+interface Modules {
+    _fieldsToList: (data?: Field) => string;
+    infocard: (data: Field, abstract?: string) => string;
+}
+
+type Field = { [key: string]: string | number | Field };
+
+window.setup._fieldsToList = (data?: Field) => {
+    if (!data) {
+        return '';
+    }
+    const keys = Object.keys(data);
+    let listMarkup = '';
+    if (keys.length) {
+        listMarkup += '<ul>';
+        keys.forEach((k: string) => {
+            const value = data[k];
+            listMarkup += `<li><strong>${k}</strong>: `;
+            if (typeof value === 'string') {
+                listMarkup += value;
+            } else if (typeof value === 'number') {
+                listMarkup += value.toString();
+            } else {
+                listMarkup += window.setup._fieldsToList(value);
+            }
+            listMarkup += '</li>';
+        });
+        listMarkup += '</ul>';
+    }
+    return listMarkup;
+};
+window.setup.infocard = (data: Field, abstract?: string) => {
+    let output = '<div class="infocard">';
+    output += window.setup._fieldsToList(data);
+    if (abstract) {
+        output += `<div class="abstract">${abstract}</div>`;
+    }
+    output += `</div>`;
+    return output;
+};

@@ -10,7 +10,7 @@
 	</head>
 	<body>
 		<tw-story tags></tw-story>
-		<!-- UUID://992209DC-A153-48BF-9F4F-B281A1FCFAC8// --><tw-storydata name="ETERNAL COMPASS ROSE" startnode="30" creator="Tweego" creator-version="2.1.1+81d1d71" ifid="992209DC-A153-48BF-9F4F-B281A1FCFAC8" zoom="1" format="Snowman" format-version="2.0.3" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">/* twine-user-stylesheet #1: "_story.css" */
+		<!-- UUID://992209DC-A153-48BF-9F4F-B281A1FCFAC8// --><tw-storydata name="ETERNAL COMPASS ROSE" startnode="25" creator="Tweego" creator-version="2.1.1+81d1d71" ifid="992209DC-A153-48BF-9F4F-B281A1FCFAC8" zoom="1" format="Snowman" format-version="2.0.3" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">/* twine-user-stylesheet #1: "_story.css" */
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Neuton:ital,wght@0,200;0,300;0,400;0,700;0,800;1,400&family=Oleo+Script:wght@400;700&family=Rouge+Script&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=block');
 
 tw-story .centered {
@@ -144,7 +144,8 @@ tw-story>*:hover {
 
 #sidebar-A, #sidebar-B {
     
-    flex: 0 1 auto;
+    flex: 0;
+    font-size: 80%
 }
 
 .passage {
@@ -221,7 +222,11 @@ tw-story>*:hover {
     animation-delay: 2000ms;
     opacity: 0;
 }
-/* twine-user-stylesheet #3: "divider.css" */
+/* twine-user-stylesheet #3: "infocard.css" */
+.infocard {
+    background:#0fcc0f;
+}
+/* twine-user-stylesheet #4: "divider.css" */
 .insert.divider {
     display: flex;
     width: 100%;
@@ -235,15 +240,11 @@ tw-story>*:hover {
     text-align: center;
     margin: 0;
 }
-/* twine-user-stylesheet #4: "fullwidth.css" */
+/* twine-user-stylesheet #5: "fullwidth.css" */
 #page article .fit {
     line-height: 100%;
     white-space: nowrap;
     display: inline-block;
-}
-/* twine-user-stylesheet #5: "infocard.css" */
-#page .infocard {
-    background:#0fcc0f;
 }
 /* twine-user-stylesheet #6: "box.css" */
 .modifier.box {
@@ -330,13 +331,25 @@ class Thing {
     constructor(initializer) {
         this.description = 'No description.';
         this.name = 'No name.';
-        this.mass = 0; // in grams
-        this.bulk = 0; // in handfuls
+        this._mass = 0; // in grams
+        this._bulk = 0; // in handfuls
         this.weapon = 0; // in relative threat units (0 is harmless, 2 is a brass knuckle, 4 is a sword, 10 is a gun)
         Object.assign(this, initializer);
     }
     copy() {
         return new Thing(this);
+    }
+    get mass() {
+        return this._mass;
+    }
+    set mass(m) {
+        this._mass = m;
+    }
+    get bulk() {
+        return this._bulk;
+    }
+    set bulk(b) {
+        this._bulk = b;
     }
     toString() {
         let s = this.description;
@@ -361,6 +374,17 @@ class Thing {
         return this.description;
     }
 }
+class Character extends Thing {
+    constructor(obj) {
+        super(obj);
+        this.inventory = new Inventory();
+    }
+    toString() {
+        let s = super.toString();
+        return s;
+    }
+}
+window.setup.data.Character = Character;
 window.setup.data.Thing = Thing;
 //# sourceMappingURL=Thing.js.map
 /* twine-user-script #2: "things.js" */
@@ -368,7 +392,8 @@ window.setup.data.Thing = Thing;
 window.setup || window.setup || {};
 window.setup.data = window.setup.data || {};
 window.setup.data.things = window.setup.data.things || [];
-() => {
+window.setup.data.characters = window.setup.data.characters || [];
+(() => {
     const d = [
         {
             name: 'computer',
@@ -386,7 +411,21 @@ window.setup.data.things = window.setup.data.things || [];
     ];
     window.setup.data.things = d.map((t) => new Thing(t));
     console.log('Things initialized.');
-};
+    const c = [
+        {
+            name: 'Nuttal',
+            mass: 62000,
+            bulk: 4,
+            description: `This is a filthy pseudo-medieval peasant.`,
+        },
+    ];
+    window.setup.data.characters = {};
+    c.forEach((char) => {
+        console.log('creating...', char);
+        const character = new Character(char);
+        window.setup.data.characters[character.name] = character;
+    });
+})();
 //# sourceMappingURL=things.js.map
 /* twine-user-script #3: "inserts.js" */
 "use strict";
@@ -414,6 +453,13 @@ window.setup.data.things = window.setup.data.things || [];
 //         return result;
 //     },
 // };
+// window.setup = window.setup || {};
+// window.setup.inserts = window.setup.inserts || {};
+// window.setup.inserts.infocard = {
+//     match: /^infocard\s+passage/i,
+//     render: (passageName, props, invocation) => {
+//     }
+// }
 // globalThis.modules = globalThis.modules || {};
 // globalThis.modules.inserts = globalThis.modules.inserts || {};
 // globalThis.modules.inserts.mention = {
@@ -700,18 +746,50 @@ $(window).on('sm.story.started', () => {
         renderToSelector('#header', 'Header');
         renderToSelector('#footer', 'Footer');
     });
-    // set default state.
-    story.state.reader = {};
-    story.state.reader.canAccessGlossary = false;
-    story.state.reader.canInspectSelf = false;
-    story.state.reader.location = undefined;
-    story.state.protagonist = false;
-    story.state.animacule = {};
-    story.state.life = {};
-    story.state.life.seed = setup.d6(6);
+    // location state
+    const elfward = {};
+    const home = {};
+    const locations = {
+        elfward,
+        home,
+    };
+    // character state
+    const reader = {
+        canAccessGlossary: false,
+        canInspectSelf: false,
+        location: undefined,
+        inventory: new Inventory(),
+    };
+    const nuttal = setup.data.characters.Nuttal;
+    const characters = {
+        reader,
+        nuttal,
+    };
+    // sub-story state
+    const prime = {
+        seed: 0,
+        time: 0,
+    };
+    const life = {
+        seed: setup.d6(6),
+        time: 0,
+    };
+    const earf = {
+        seed: setup.d6(6),
+        time: 0,
+    };
+    story.state = {
+        characters,
+        locations,
+        reader,
+        protagonist: nuttal,
+        story: prime,
+        life,
+        earf,
+    };
     // scroll to the top each passage
     $().on('sm.passage.shown', function () {
-        window.scrollTo(0, 0);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 });
 /**
@@ -798,6 +876,41 @@ $(window).on('sm.passage.shown', (_e, _data) => {
         fitty('.fullwidth');
     }
 });
+window.setup._fieldsToList = (data) => {
+    if (!data) {
+        return '';
+    }
+    const keys = Object.keys(data);
+    let listMarkup = '';
+    if (keys.length) {
+        listMarkup += '<ul>';
+        keys.forEach((k) => {
+            const value = data[k];
+            listMarkup += `<li><strong>${k}</strong>: `;
+            if (typeof value === 'string') {
+                listMarkup += value;
+            }
+            else if (typeof value === 'number') {
+                listMarkup += value.toString();
+            }
+            else {
+                listMarkup += window.setup._fieldsToList(value);
+            }
+            listMarkup += '</li>';
+        });
+        listMarkup += '</ul>';
+    }
+    return listMarkup;
+};
+window.setup.infocard = (data, abstract) => {
+    let output = '<div class="infocard">';
+    output += window.setup._fieldsToList(data);
+    if (abstract) {
+        output += `<div class="abstract">${abstract}</div>`;
+    }
+    output += `</div>`;
+    return output;
+};
 //# sourceMappingURL=story.js.map
 /* twine-user-script #8: "utilities.js" */
 "use strict";
@@ -1239,49 +1352,14 @@ The reader is a
 
 {full width, text: &#39;The End&#39;}
 
-{restart link}</tw-passagedata><tw-passagedata pid="6" name="Earf" tags="" position="725,100" size="100,100"># Welcome to Earf</tw-passagedata><tw-passagedata pid="7" name="WITNESS THE ETERNAL COMPASS ROSE" tags="ecr ui" position="850,100" size="100,100">&lt;% story.state.reader.canAccessGlossary = true %&gt;
-
-As an **INITIATE** of the mysterious _Eternal Compass Rose_, you have partial access to a single primary CID narrative and several sub-narratives within it. Incredible!
-
-As an **INITIATE** of the mysterious _Eternal Compass Rose_, you have partial access to
-
-&lt;div.fullwidth.elaborate&gt;
-
-the glossary 
-
-&lt;/div&gt;
-
-above, in all contexts!
-
-&lt;hr/&gt;
-
-&lt;div.infocard&gt;
-
-**CID**: PArTy-p00p3R5\
-**Narrative Indices**: 7aXa_84.b.\*.a   
-**Seeds**: RNG(3d6x6)\
-**Resolution Coefficients**: T=(3.2 x 10^-10 s), L=(1.6 \* 10^-35 m), U=(1.2 \* 10^18 u)\
-**Primary Sub-narrative CIDs**: Earf-[\*], CORVETTE-End-times-Bestian-[T&lt;10^51, T&gt;10^200], Bezos-[933], Total-LY-8OS
-
-&lt;/div&gt;
-
-&gt; [[WHAT IS: a CID?-&gt;glossary-cid]]
-&gt; [[ACCESS SUBNARRATIVE: Earf-[\*]-&gt;Earf]]
-&gt; [[ACCESS SUBNARRATIVE: CORVETTE-End-times-Bestian-[T&lt;10^51, T&gt;10^200]-&gt;Corvette Endtimes]]
-&gt; [[ACCESS SUBNARRATIVE: LIFE-Bestian-[T~10^51]-&gt;Life]]
-
-&lt;hr /&gt;
-
-Learn, be changed!</tw-passagedata><tw-passagedata pid="8" name="Footer" tags="" position="975,100" size="100,100">[[WITNESS THE ETERNAL COMPASS ROSE]]
-
-[[DENY THE ETERNAL COMPASS ROSE]]</tw-passagedata><tw-passagedata pid="9" name="glossary" tags="page glossary" position="1100,100" size="100,100">**WELCOME** to the ECR
+{restart link}</tw-passagedata><tw-passagedata pid="6" name="Earf" tags="" position="725,100" size="100,100"># Welcome to Earf</tw-passagedata><tw-passagedata pid="7" name="glossary" tags="page glossary" position="850,100" size="100,100">**WELCOME** to the ECR
 {full width, text: &#39;Glossary&#39;}
 
 # ! ! !
 
 &lt;%= window.setup.buildGlossary() %&gt;
 
-&lt;%= window.setup.backlink() %&gt;</tw-passagedata><tw-passagedata pid="10" name="glossary-cid" tags="glossary term" position="1225,100" size="100,100"># CID
+&lt;%= window.setup.backlink() %&gt;</tw-passagedata><tw-passagedata pid="8" name="glossary-cid" tags="glossary term" position="975,100" size="100,100"># CID
 
 A **CID** is a unique reference to a set of [[narratives-&gt;glossary-narrative]] identified and codified within the [[Eternal Compass Rose-&gt;glossary-eternal-compass-rose]]. It describes the types of narratives within the set and supplies friendly nicknames for those most referenced, which the reader is sure to find delightful.
 
@@ -1302,7 +1380,7 @@ Let us examime the structure of the CID in which [[the reader-&gt;glossary-the-r
 
 &lt;/div&gt;
 
-&lt;%= window.setup.backlink() %&gt;</tw-passagedata><tw-passagedata pid="11" name="glossary-ecr" tags="glossary term" position="100,225" size="100,100"># ETERNAL COMPASS ROSE
+&lt;%= window.setup.backlink() %&gt;</tw-passagedata><tw-passagedata pid="9" name="glossary-ecr" tags="glossary term" position="1100,100" size="100,100"># ETERNAL COMPASS ROSE
 
 Every system contains theorems that may not be proven within that system.
 
@@ -1314,13 +1392,13 @@ Those narratives that may not be indexed by the ULTIMATE CATALOG compose [[NULLS
 
 # ETERNAL COMPASS ROSE
 
-&lt;%= window.setup.backlink() %&gt;</tw-passagedata><tw-passagedata pid="12" name="glossary-religion" tags="glossary term" position="225,225" size="100,100"># Religion 
+&lt;%= window.setup.backlink() %&gt;</tw-passagedata><tw-passagedata pid="10" name="glossary-religion" tags="glossary term" position="1225,100" size="100,100"># Religion 
 
 ## CONCEPT SUPPLANTED BY ///REDACTION///
 
 An aside: Consider /[/[YOUR/]/] bible as post apocalyptic literature, each book by different author/conflicting story as different author, use apocrypha as well. Genesis in reverse? Void actually spectrum, unnamed, naming causes disruption. Separation of waters destroys peace, manifestation of consciousness.
 
-&lt;%= window.setup.backlink() %&gt;</tw-passagedata><tw-passagedata pid="13" name="glossary-eternal-compass-rose" tags="glossary term" position="350,225" size="100,100"># ETERNAL COMPASS ROSE
+&lt;%= window.setup.backlink() %&gt;</tw-passagedata><tw-passagedata pid="11" name="glossary-eternal-compass-rose" tags="glossary term" position="100,225" size="100,100"># ETERNAL COMPASS ROSE
 
 ## ///SIMPLIFIED
 
@@ -1332,7 +1410,7 @@ Metaphysical level indicates the positive or negative perfection of the universe
 
 Probabilities of zero or less are controlled by Chaos. Probabilities between zero and one indicate the presence of parallel universes and alternate outcomes. Fully resolved simulations have probability 1. Probabilities greater than one are result values of completed simulations.
 
-&lt;%= window.setup.backlink() %&gt;</tw-passagedata><tw-passagedata pid="14" name="glossary-utlimate-catalog" tags="glossary term" position="475,225" size="100,100"># Ultimate Catalog
+&lt;%= window.setup.backlink() %&gt;</tw-passagedata><tw-passagedata pid="12" name="glossary-utlimate-catalog" tags="glossary term" position="225,225" size="100,100"># Ultimate Catalog
 
 Every system contains theorems that may not be proven within that system.
 
@@ -1344,14 +1422,14 @@ Those narratives that may not be indexed by the ULTIMATE CATALOG compose NULLSPA
 
 ETERNAL COMPASS ROSE
 
-&lt;%= window.setup.backlink() %&gt;</tw-passagedata><tw-passagedata pid="15" name="glossary-story" tags="glossary term" position="600,225" size="100,100"># Story
+&lt;%= window.setup.backlink() %&gt;</tw-passagedata><tw-passagedata pid="13" name="glossary-story" tags="glossary term" position="350,225" size="100,100"># Story
 
 Story is the conversion of simulated NULLSPACE into narrative.
 NULLSPACE asymptotically approaches zero in countably infinite dimensions.
 The asymptote may only be
 ETERNAL COMPASS ROSE
 
-&lt;%= window.setup.backlink() %&gt;</tw-passagedata><tw-passagedata pid="16" name="glossary-simulation" tags="glossary term" position="725,225" size="100,100"># Simulation
+&lt;%= window.setup.backlink() %&gt;</tw-passagedata><tw-passagedata pid="14" name="glossary-simulation" tags="glossary term" position="475,225" size="100,100"># Simulation
 
 Eternal Compass Rose is the index of relationships among sets of simulacra. The system of classification used is provably perfect. 
 
@@ -1359,7 +1437,7 @@ Tasks expand to fill their containers.
 
 Everything has been organized
 
-&lt;%= window.setup.backlink() %&gt;</tw-passagedata><tw-passagedata pid="17" name="glossary-the-reader" tags="glossary term" position="850,225" size="100,100"># The Reader
+&lt;%= window.setup.backlink() %&gt;</tw-passagedata><tw-passagedata pid="15" name="glossary-the-reader" tags="glossary term" position="600,225" size="100,100"># The Reader
 
 The reader is the narrative processor of a specific narrative. Here are some examples of readers that may be familiar to you.
 
@@ -1371,7 +1449,7 @@ Narratives do not require readers.
 
 COUNTERFACTUAL: There is no writer.
 
-&lt;%= window.setup.backlink() %&gt;</tw-passagedata><tw-passagedata pid="18" name="glossary-narrative" tags="glossary term" position="975,225" size="100,100"># Narrative
+&lt;%= window.setup.backlink() %&gt;</tw-passagedata><tw-passagedata pid="16" name="glossary-narrative" tags="glossary term" position="725,225" size="100,100"># Narrative
 
 ## (traditional)
 
@@ -1383,28 +1461,28 @@ see [[Narrative Engine-&gt;glossary-narrative engine]]
 
 a spoken or written account of connected events; a story.
 
-&lt;%= window.setup.backlink() %&gt;</tw-passagedata><tw-passagedata pid="19" name="glossary-narrative engine" tags="glossary term" position="1100,225" size="100,100"># Narrative Engine
+&lt;%= window.setup.backlink() %&gt;</tw-passagedata><tw-passagedata pid="17" name="glossary-narrative engine" tags="glossary term" position="850,225" size="100,100"># Narrative Engine
 
-The Narrative Engine is the ultimate FTA device. It is an invention of the [[Ultimate Galatic Empire-&gt;glossary-bestian]].</tw-passagedata><tw-passagedata pid="20" name="glossary-bestian" tags="glossary term" position="1225,225" size="100,100"># Bestian
+The Narrative Engine is the ultimate FTA device. It is an invention of the [[Ultimate Galatic Empire-&gt;glossary-bestian]].</tw-passagedata><tw-passagedata pid="18" name="glossary-bestian" tags="glossary term" position="975,225" size="100,100"># Bestian
 
-&lt;%= window.setup.backlink() %&gt;</tw-passagedata><tw-passagedata pid="21" name="glossary-earth" tags="glossary term" position="100,350" size="100,100"># Earth
+&lt;%= window.setup.backlink() %&gt;</tw-passagedata><tw-passagedata pid="19" name="glossary-earth" tags="glossary term" position="1100,225" size="100,100"># Earth
 
 A planet. A close analog of [[Earf-&gt;glossary-earf]]. The last life in the ECR is located here.
 
-&lt;%= window.setup.backlink() %&gt;</tw-passagedata><tw-passagedata pid="22" name="glossary-earf" tags="glossary term" position="225,350" size="100,100"># Earf
+&lt;%= window.setup.backlink() %&gt;</tw-passagedata><tw-passagedata pid="20" name="glossary-earf" tags="glossary term" position="1225,225" size="100,100"># Earf
 
 A planet. A close analog of [[Earth-&gt;glossary-earth]].
 
-&lt;%= window.setup.backlink() %&gt;</tw-passagedata><tw-passagedata pid="23" name="Header" tags="" position="350,350" size="100,100">&lt;% if(window.story?.state?.reader?.canAccessGlossary &amp;&amp; !passage.tags.includes(&#39;glossary&#39;)){ %&gt;
-    [[glossary]]
-&lt;% } %&gt;</tw-passagedata><tw-passagedata pid="24" name="Life Infocard" tags="" position="475,350" size="100,100">**Subnarrative CID**: Primary LIFE-Bestian-[T~10^51]-&gt;Early Life
+&lt;%= window.setup.backlink() %&gt;</tw-passagedata><tw-passagedata pid="21" name="Life Infocard" tags="" position="100,350" size="100,100">&lt;div.infocard&gt;
+
+**Subnarrative CID**: Primary LIFE-Bestian-[T~10^51]-&gt;Early Life
 **Seed**: {life.seed}
 **Narrative Index**: 7aXa_84.b.FFF.a  T: 3.9447 x 10^24 
 **__2ND_PERSON__EDUTAINMENT__**
 
 **Abstract (T({life.seed})-&gt;, Primary LIFE-Bestian)**:
 
-`__**The first life appears as early as physics allows**__ and rapidly becomes more complex; historical document presented as edutainment.`</tw-passagedata><tw-passagedata pid="25" name="Life" tags="" position="600,350" size="100,100">life.seed: (random.d6 + random.d6 + random.d6 + random.d6 + random.d6 + random.d6) * 6
+`__**The first life appears as early as physics allows**__ and rapidly becomes more complex; historical document presented as edutainment.`</tw-passagedata><tw-passagedata pid="22" name="Life" tags="" position="225,350" size="100,100">life.seed: (random.d6 + random.d6 + random.d6 + random.d6 + random.d6 + random.d6) * 6
 --
 
 {infocard passage: &#39;Life Infocard&#39;}
@@ -1422,7 +1500,7 @@ A planet. A close analog of [[Earth-&gt;glossary-earth]].
 
 You are a unicellular form of life.
 
-&gt; [[Metabolize]]</tw-passagedata><tw-passagedata pid="26" name="Metabolize" tags="" position="725,350" size="100,100">energy: 50
+&gt; [[Metabolize]]</tw-passagedata><tw-passagedata pid="23" name="Metabolize" tags="" position="350,350" size="100,100">energy: 50
 hungry: false
 opponent.distance: random.d10 + random.d10
 molecule.distance: random.d10 + random.d10
@@ -1430,7 +1508,7 @@ molecule.distance: random.d10 + random.d10
 
 An increment of time passes in the murk. Your awareness as a single living cell is not finely attuned.
 
-&gt; [[Metabolize-&gt;Metabolize Again]]</tw-passagedata><tw-passagedata pid="27" name="Metabolize Again" tags="" position="850,350" size="100,100">energy: energy - random.d20
+&gt; [[Metabolize-&gt;Metabolize Again]]</tw-passagedata><tw-passagedata pid="24" name="Metabolize Again" tags="" position="475,350" size="100,100">energy: energy - random.d20
 hungry: energy &lt; 25
 opponent.distance: opponent.distance - 1
 molecule.distance: molecule.distance - 1
@@ -1458,17 +1536,60 @@ There is another cell nearby.
 [if opponent.near]
 &gt; [[Move away from the other cell.]]
 &gt; [[Move towards the other cell.]]
-[continue]</tw-passagedata><tw-passagedata pid="28" name="Sidebar-A" tags="sidebar" position="975,350" size="100,100">&lt;% if (window.story?.state?.protagonist) { %&gt;
+[continue]</tw-passagedata><tw-passagedata pid="25" name="nuttal-Start" tags="" position="600,350" size="100,100">&lt;%= 
+setup.infocard({
+    &#39;CID&#39;: &#39;PArTy-p00p3R5&#39;,
+    &#39;Subnarrative CID&#39;: &#39;Earf-\[\T~7 x 10^53\]&#39;,
+    &#39;Seed&#39;: story.state.earf.seed,
+    &#39;Narrative Index&#39;: &#39;7aXa_84.b.FFF.b&#39;,
+    &#39;__2ND_PERSON_EDUTAINMENT__&#39;: &#39;true&#39;,
+    &#39;__AS&#39;: &#39;_PEASANT( NUTTAL )_&#39;, 
+}, &#39;A pseudo-medieval peasant encounters an aspect of {{SPOILER_TAGS}}; historical document presented as edutainment.&#39;)
+%&gt;
 
-&lt;div.protagonist&gt;
-&lt;span.label&gt;PROTAG: &lt;/span&gt;&lt;%= window.story.state.protagonist.toString() %&gt;
-&lt;/div&gt;
+&lt;% 
+    story.state.story = story.state.earf;
+%&gt;
 
-&lt;% } %&gt;</tw-passagedata><tw-passagedata pid="29" name="Sidebar-B" tags="sidebar" position="1100,350" size="100,100">&lt;% if (false) { %&gt;
+# Welcome to Earf
 
-/PROTAG: reader/
+You are a slovenly inhabitant of the backwater village of Elfward, somewhere on the planet Earf. Your name is Nuttal. Tax and religious documentation that you will never be able to read refers to you as either &#39;Nuttal of Elfward&#39; or &#39;Nuttal Dunggatherer&#39;.
 
-&lt;% } %&gt;</tw-passagedata><tw-passagedata pid="30" name="Start" tags="start" position="700,350" size="100,100">&lt;div.centered&gt;
+Your life is an uninterrupted cycle of sleep, dung collection, and scrounging for food. Your fingernails are caked with fecal matter, and your belly is full of porrige and squirrel meat. 
+
+The sun is setting. Elfward is quiet.
+
+&gt; [[Go home and sleep-&gt;nuttal-go home]]</tw-passagedata><tw-passagedata pid="26" name="nuttal-go home" tags="" position="725,350" size="100,100">&lt;% story.state.story.time += 10 %&gt;
+
+Your little shack is close to the center of the village, and you make it home as the sun sets. You&#39;re out of candles, so you lie on your pallet to spend some time picking at lice in the dark.
+
+Gnaw, a friendly village dog, nudges open the door and climbs on your bed. His warmth helps you fall asleep.
+
+&gt; [[Sleep.-&gt;nuttal-sleep at home]]</tw-passagedata><tw-passagedata pid="27" name="nuttal-sleep at home" tags="" position="850,350" size="100,100">&lt;% story.state.story.time += 2400 %&gt;
+
+Your dreams are more than the usual rehashing of the day&#39;s events, but less than interesting. You wake up to moonlight filtered through gaps in your home&#39;s roof and spilling in through the open door.
+
+Gnaw trots out the door, leaving you chilly.
+
+&gt; [[Follow Gnaw.-&gt;nuttal-follow gnaw]]</tw-passagedata><tw-passagedata pid="28" name="nuttal-follow gnaw" tags="" position="975,350" size="100,100">&lt;% story.state.story.time += 5 %&gt;
+
+You get out of bed to see what the dog is up to.
+
+&gt; [[Leave your home.-&gt;nuttal-elfward square night]]</tw-passagedata><tw-passagedata pid="29" name="nuttal-elfward square night" tags="" position="1100,350" size="100,100"># Elfward Village Square
+
+While dim, the moon offers enough light to show you the empty village square. Gnaw sniffs the air a few feet in front of you, looking confused. The dog looks back at you and sniffs again. A tremble runs from the dog&#39;s paws to its face, and it runs off across the square and out of sight.
+
+Stupid dog.
+
+&lt;% story.state.story.time += 2 %&gt;
+
+&gt; [[Go back to bed.-&gt;nuttal-more sleep at home]]</tw-passagedata><tw-passagedata pid="30" name="nuttal-more sleep at home" tags="" position="1225,350" size="100,100">You return to the shack and close the door.
+
+Without your canine blanket to give you warmth and share parasites, it takes a little longer to get back to sleep, but you manage just fine.
+
+&gt; [[Sleep through the night.-&gt;nuttal-wake up morning]]</tw-passagedata><tw-passagedata pid="31" name="nuttal-wake up morning" tags="" position="100,475" size="100,100">&lt;% story.state.story.time += 2400 %&gt;
+
+The absence of moonlight wakes you before the dawn can. The early bird catches the worm, after all, and there is a fresh new crop of dung to collect. You spring out of bed.</tw-passagedata><tw-passagedata pid="32" name="Start" tags="start" position="700,350" size="100,100">&lt;div.centered&gt;
 
 &lt;div.fullwidth.delicate.fade-in&gt;
 
@@ -1483,13 +1604,13 @@ are due to
 &lt;div.fullwidth.elaborate&gt;you&lt;/div&gt;
 
 
-[[because-&gt;Start-1]]</tw-passagedata><tw-passagedata pid="31" name="Start-1" tags="start" position="100,475" size="100,100">&lt;div.centered&gt;
+[[because-&gt;Start-1]]</tw-passagedata><tw-passagedata pid="33" name="Start-1" tags="start" position="350,475" size="100,100">&lt;div.centered&gt;
 
 
 &lt;h1 class=&quot;fullwidth elaborate fade-in&quot;&gt;YOU&lt;/h1&gt;
 
 
-have [[discovered **this media** fully-&gt;Start-2]] describing</tw-passagedata><tw-passagedata pid="32" name="Start-2" tags="start" position="225,475" size="100,100">&lt;div.box.rose&gt;
+have [[discovered **this media** fully-&gt;Start-2]] describing</tw-passagedata><tw-passagedata pid="34" name="Start-2" tags="start" position="475,475" size="100,100">&lt;div.box.rose&gt;
 
 **Eternal**
 **Compass**
@@ -1513,14 +1634,14 @@ perfectly redacted, paginated, and conceptually codified for your approximate
 # **ETERNAL COMPASS ROSE** [[coordinates-&gt;Start-3]]
 
 &lt;/div&gt;
-&lt;/div&gt;</tw-passagedata><tw-passagedata pid="33" name="Start-3" tags="start" position="350,475" size="100,100">&lt;div.box&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="35" name="Start-3" tags="start" position="600,475" size="100,100">&lt;div.box&gt;
 
 coordinates
 
 &lt;/div&gt;
 in a semi-narrative hypertextual format indubitably known scientifically to be correct and good in all aspects, dimensions, simulations and other narrative structures.
 
-[[Interactions with ETERNAL COMPASS ROSE begin joyfully.-&gt;Start-4]]</tw-passagedata><tw-passagedata pid="34" name="Start-4" tags="start" position="475,475" size="100,100">&lt;% $(&#39;.passage&#39;).addClass(&#39;.jumble&#39;) %&gt;
+[[Interactions with ETERNAL COMPASS ROSE begin joyfully.-&gt;Start-4]]</tw-passagedata><tw-passagedata pid="36" name="Start-4" tags="start" position="725,475" size="100,100">&lt;% $(&#39;.passage&#39;).addClass(&#39;.jumble&#39;) %&gt;
 
 ## The reader(‽), aka and also including those who engage with this media, aka 
 
@@ -1538,7 +1659,7 @@ are encouraged to annotate and share it by the organizing principles of ETERNAL 
 
 &lt;div.fullwidth&gt;
 [[A !!~~WARNING~~!!-&gt;Start-5]]
-&lt;/div&gt;</tw-passagedata><tw-passagedata pid="35" name="Start-5" tags="start" position="600,475" size="100,100">&lt;div.box.warning.vertical&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="37" name="Start-5" tags="start" position="850,475" size="100,100">&lt;div.box.warning.vertical&gt;
 ## WARNING *WAR*NING WAR*N*ING WARN*ING* !!!
 &lt;/div&gt;
 
@@ -1549,7 +1670,7 @@ Partial Understanding is not guaranteed. Full understanding is heretical to the 
 - [[WITNESS THE ETERNAL COMPASS ROSE]]
 &lt;/div&gt;
 
-- [[DENY THE ETERNAL COMPASS ROSE]]</tw-passagedata><tw-passagedata pid="36" name="test-page" tags="test" position="825,475" size="100,100"># Testing
+- [[DENY THE ETERNAL COMPASS ROSE]]</tw-passagedata><tw-passagedata pid="38" name="test-page" tags="test" position="825,475" size="100,100"># Testing
 
 This is a test page for all of the fancier bits.
 
@@ -1636,15 +1757,60 @@ some fancy stuff here
 
 Visit [[this passage-&gt;Test-Clear-Overview]] to clear the overview.
 
-{back link}</tw-passagedata><tw-passagedata pid="37" name="Test-Insert-Infocard" tags="test" position="850,475" size="100,100">This is a sample.
+{back link}</tw-passagedata><tw-passagedata pid="39" name="Test-Insert-Infocard" tags="test" position="1100,475" size="100,100">This is a sample.
 
 **label**: data
-**label**: more data</tw-passagedata><tw-passagedata pid="38" name="Test-Clear-Overview" tags="test" position="975,475" size="100,100">The overview section should be gone now.
+**label**: more data</tw-passagedata><tw-passagedata pid="40" name="Test-Clear-Overview" tags="test" position="1225,475" size="100,100">The overview section should be gone now.
 [move clear]
 
 [continue]
 
-{back link}</tw-passagedata><tw-passagedata pid="39" name="YOU" tags="" position="1100,475" size="100,100">--
+{back link}</tw-passagedata><tw-passagedata pid="41" name="Footer" tags="" position="100,600" size="100,100"></tw-passagedata><tw-passagedata pid="42" name="Header" tags="" position="225,600" size="100,100">&lt;% if(window.story?.state?.reader?.canAccessGlossary &amp;&amp; !passage.tags.includes(&#39;glossary&#39;)){ %&gt;
+    [[glossary]]
+&lt;% } %&gt;</tw-passagedata><tw-passagedata pid="43" name="Sidebar-A" tags="sidebar" position="350,600" size="100,100">&lt;% if (story?.state?.protagonist) { %&gt;
+
+&lt;div.protagonist&gt;
+&lt;span.label&gt;PROTAG: &lt;/span&gt;&lt;%= story.state.protagonist.toString() %&gt;
+&lt;/div&gt;
+
+&lt;% } %&gt;</tw-passagedata><tw-passagedata pid="44" name="Sidebar-B" tags="sidebar" position="475,600" size="100,100">&lt;% if (false) { %&gt;
+
+/PROTAG: reader/
+
+&lt;% } %&gt;</tw-passagedata><tw-passagedata pid="45" name="WITNESS THE ETERNAL COMPASS ROSE" tags="ecr ui" position="600,600" size="100,100">&lt;% story.state.reader.canAccessGlossary = true %&gt;
+
+As an **INITIATE** of the mysterious _Eternal Compass Rose_, you have partial access to a single primary CID narrative and several sub-narratives within it. Incredible!
+
+As an **INITIATE** of the mysterious _Eternal Compass Rose_, you have partial access to
+
+&lt;div.fullwidth.elaborate&gt;
+
+the glossary 
+
+&lt;/div&gt;
+
+above, in all contexts!
+
+&lt;hr/&gt;
+
+&lt;div.infocard&gt;
+
+**CID**: PArTy-p00p3R5\
+**Narrative Indices**: 7aXa_84.b.\*.a   
+**Seeds**: RNG(3d6x6)\
+**Resolution Coefficients**: T=(3.2 x 10^-10 s), L=(1.6 \* 10^-35 m), U=(1.2 \* 10^18 u)\
+**Primary Sub-narrative CIDs**: Earf-[\*], CORVETTE-End-times-Bestian-[T&lt;10^51, T&gt;10^200], Bezos-[933], Total-LY-8OS
+
+&lt;/div&gt;
+
+&gt; [[WHAT IS: a CID?-&gt;glossary-cid]]
+&gt; [[ACCESS SUBNARRATIVE: Earf-[\*]-&gt;Earf]]
+&gt; [[ACCESS SUBNARRATIVE: CORVETTE-End-times-Bestian-[T&lt;10^51, T&gt;10^200]-&gt;Corvette Endtimes]]
+&gt; [[ACCESS SUBNARRATIVE: LIFE-Bestian-[T~10^51]-&gt;Life]]
+
+&lt;hr /&gt;
+
+Learn, be changed!</tw-passagedata><tw-passagedata pid="46" name="YOU" tags="" position="725,600" size="100,100">--
 
 [if you]
 Hello, {you}.

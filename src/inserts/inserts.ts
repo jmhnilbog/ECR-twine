@@ -26,6 +26,15 @@
 //     },
 // };
 
+// window.setup = window.setup || {};
+// window.setup.inserts = window.setup.inserts || {};
+// window.setup.inserts.infocard = {
+//     match: /^infocard\s+passage/i,
+//     render: (passageName, props, invocation) => {
+
+//     }
+// }
+
 // globalThis.modules = globalThis.modules || {};
 // globalThis.modules.inserts = globalThis.modules.inserts || {};
 // globalThis.modules.inserts.mention = {

@@ -131,7 +131,8 @@ tw-story>*:hover {
 
 #sidebar-A, #sidebar-B {
     
-    flex: 0 1 auto;
+    flex: 0;
+    font-size: 80%
 }
 
 .passage {
